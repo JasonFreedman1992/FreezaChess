@@ -92,15 +92,24 @@ public class State
                 }
             }
         }
-        // if state.Turn is in Check
-        if(danger.inDanger(kRow, kColumn))
+        // if king can move away, out of check
+        if(danger.checkRunAway(kRow, kColumn))
         {
-
+            checkMate = false;
         }
-        // if state.Turn is not in Check
+        // if king cant move away, out of check
         else
         {
+            // if king is in check at this state
+            if(danger.inDanger(kRow, kColumn))
+            {
+                
+            }
+            // if king is not in check at this state
+            else
+            {
 
+            }
         }
     }
     public void newGame()
