@@ -77,7 +77,6 @@ public class Logic
       	state.cTurn = "";
    	}
 
-   	// temporary checkking, replace with team alive searching, much faster.
     void checkKing()
     {
     	for(int i = 0; i < 8; i++)

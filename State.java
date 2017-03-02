@@ -6,38 +6,21 @@ public class State
 	public static ArrayList<String> bDead = new ArrayList<String>();
 	public static ArrayList<inf>wAlive = new ArrayList<inf>();
 	public static ArrayList<inf>bAlive = new ArrayList<inf>();
-    public static ArrayList<hinf>wHolds = new ArrayList<hinf>();
-    public static ArrayList<hinf>bHolds = new ArrayList<hinf>();
     public static boolean wCastleUpLeftMoved = false;
     public static boolean wCastleUpRightMoved = false;
     public static boolean wKingMoved = false;
 	public static boolean bCastleDownLeftMoved = false;
     public static boolean bCastleDownRightMoved = false;
     public static boolean bKingMoved = false;
-
     public static boolean Convert = false;
-    public static boolean cHold = false;
-    public static boolean bcHold = false;
-    public static boolean wcHold = false;
     public static boolean checkMate = false;
     public static boolean staleMate = false;
-
     public static boolean kill = false;
-
 	public static String Turn = "b";
     public static String cTurn = "";
     public static int cRow = 0;
     public static int cColumn = 0;
 	public static String[][] Board = new String[8][8];
-
-    public void addbHold(int p_row, int p_column)
-    {
-        bHolds.add(new hinf(p_row, p_column));
-    }
-    public void addwHold(int p_row, int p_column)
-    {
-        wHolds.add(new hinf(p_row, p_column));
-    }
     public void changeTurn()
     {
         if(Turn == "w")
@@ -80,9 +63,49 @@ public class State
         {
             bCastleDownRightMoved = true;
         }
+        updateCheckMate();
+    }
+    void updateCheckMate()
+    {
+        int kRow = 0;
+        int kColumn = 0;
+        Danger danger = new Danger();
+        if(Turn == "w")
+        {
+            for(int i = 0; i < wAlive.size(); i++)
+            {
+                if(wAlive.get(i).type == "wk")
+                {
+                    kRow = wAlive.get(i).startRow;
+                    kColumn = wAlive.get(i).startColumn;
+                }
+            }
+        }
+        else if(Turn == "b")
+        {
+            for(int i = 0; i < bAlive.size(); i++)
+            {
+                if(bAlive.get(i).type == "bk")
+                {
+                    kRow = bAlive.get(i).startRow;
+                    kColumn = bAlive.get(i).startColumn;
+                }
+            }
+        }
+        // if state.Turn is in Check
+        if(danger.inDanger(kRow, kColumn))
+        {
+
+        }
+        // if state.Turn is not in Check
+        else
+        {
+
+        }
     }
     public void newGame()
     {
+        Turn = "b";
         wCastleUpLeftMoved = false;
         wCastleUpRightMoved = false;
         wKingMoved = false;
@@ -149,10 +172,6 @@ public class State
            	}
       	}
    	}
-    void updateHold()
-    {
-
-    }
     class inf
     {
 	    int startRow = 0;
@@ -163,16 +182,6 @@ public class State
             startRow = p_startRow;
             startColumn = p_startColumn;
             type = p_type;
-        }
-    }
-    class hinf
-    {
-        int startRow = 0;
-        int startColumn = 0;
-        hinf(int p_startRow, int p_startColumn)
-        {
-            startRow = p_startRow;
-            startColumn = p_startColumn;
         }
     }
 }

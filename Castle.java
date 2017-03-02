@@ -66,7 +66,7 @@ public class Castle
    	   if(p_endRow == 7 && p_endColumn == 2)
    	   {
           	for(int i = 3; i > 0; i--)
-        	{
+        	   {
             	if(state.Board[7][i] != "z")
             	{
                		return false;

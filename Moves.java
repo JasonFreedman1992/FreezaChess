@@ -455,35 +455,11 @@ public class Moves
       }
       if(pass == true & p_endRow == 7 && p_startRow == 6)
       {
-         if(!state.wDead.isEmpty())
-         {
-            for(int i = 0; i < state.wDead.size(); i++)
-            {
-               if(state.wDead.get(i) != "wp")
-               {
-                  System.out.println("Conversion turned on for w");
-                  state.Convert = true;
-                  state.cTurn = "w";
-                  state.cRow = p_endRow;
-                  state.cColumn = p_endColumn;
-               }
-               if(i == (state.wDead.size() - 1))
-               {
-                  if(state.wDead.get(i) == "wp")
-                  {
-                     state.cHold = true;
-                     state.wcHold = true;
-                     state.addwHold(p_endRow, p_endColumn);
-                  }
-               }
-            }
-         }
-         else
-         {
-            state.cHold = true;
-            state.wcHold = true;
-            state.addwHold(p_endRow, p_endColumn);
-         }
+         System.out.println("Conversion turned on for w");
+         state.Convert = true;
+         state.cTurn = "w";
+         state.cRow = p_endRow;
+         state.cColumn = p_endColumn;
       }
    }
 	void bpawn(int p_startRow, int p_startColumn, int p_endRow, int p_endColumn)
@@ -546,35 +522,11 @@ public class Moves
       }
       if(pass == true & p_endRow == 0 && p_startRow == 1)
       {
-         if(!state.bDead.isEmpty())
-         {
-            for(int i = 0; i < state.bDead.size(); i++)
-            {
-               if(state.bDead.get(i) != "bp")
-               {
-                  System.out.println("Conversion turned on for b");
-                  state.Convert = true;
-                  state.cTurn = "b";
-                  state.cRow = p_endRow;
-                  state.cColumn = p_endColumn;
-               }
-               if(i == (state.bDead.size() - 1))
-               {
-                  if(state.bDead.get(i) == "bp")
-                  {
-                     state.cHold = true;
-                     state.bcHold = true;
-                     state.addbHold(p_endRow, p_endColumn);
-                  }
-               }
-            }
-         }
-         else
-         {
-            state.cHold = true;
-            state.bcHold = true;
-            state.addbHold(p_endRow, p_endColumn);
-         }
+         System.out.println("Conversion turned on for b");
+         state.Convert = true;
+         state.cTurn = "b";
+         state.cRow = p_endRow;
+         state.cColumn = p_endColumn;
       }
 	}
 }

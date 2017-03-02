@@ -7,8 +7,8 @@ public class Window extends JFrame
 {
 	JLabel[][] spots = new JLabel[8][8];
 	JLabel bar = new JLabel();
-	JLabel[] bdead = new JLabel[15];
-	JLabel[] wdead = new JLabel[15];
+	JLabel[] bdead = new JLabel[23];
+	JLabel[] wdead = new JLabel[23];
 	// white images pre-loaded
 	ImageIcon wc = new ImageIcon("wc.jpg");
     ImageIcon wn = new ImageIcon("wn.jpg");
@@ -27,6 +27,12 @@ public class Window extends JFrame
     State state = new State();
     Player WPlayer = new Player("w");
     Player BPlayer = new Player("b");
+    Freeza WFreeza = new Freeza("w");
+    Freeza BFreeza = new Freeza("b");
+    public JButton initGame = new JButton("New Game");
+    public JButton initFreeza = new JButton("Start Freeza");
+    public JButton initQueen = new JButton("Queen");
+    public JButton initKnight = new JButton("Knight");
     int column;
     int row;
     String type;
@@ -60,54 +66,109 @@ public class Window extends JFrame
                     System.out.println("state turn = b");
         			BPlayer.run(row, column, type);
         		}
-                state.update();
                 Render();
                 RenderDead();
+                state.update();
         	}
         }
     }
-    //
-    // listen class for dead pieces (dlisten)
-    //
-    class dlisten extends MouseAdapter
+    void initFreezaButton()
     {
-        int i;
-        String type = "";
-        public dlisten(int p_i)
+        initFreeza.setSize(125, 40);
+        initFreeza.setLocation(125, 30);
+        initFreeza.setText("Start Freeza");
+        initFreeza.addActionListener(new ActionListener()
         {
-            i = p_i;
-        }
-        public void mouseClicked(MouseEvent e)
+            public void actionPerformed(ActionEvent e)
+            {  
+
+            }
+        });
+        add(initFreeza);
+        initFreeza.setVisible(true);
+    }
+    void initGameButton()
+    {
+        initGame.setSize(125, 40);
+        initGame.setLocation(275, 30);
+        initGame.setText("New Game");
+        initGame.addActionListener(new ActionListener()
         {
-      		System.out.println("dead spot: " + i);
-      		if(state.Convert)
-      		{
-                if(state.cTurn == "w")
+            public void actionPerformed(ActionEvent e)
+            {
+                state.newGame();
+                Render();
+                RenderDead();
+            }
+        });
+        add(initGame);
+        initGame.setVisible(true);
+    }
+    void initKnightButton()
+    {
+        initKnight.setSize(125, 40);
+        initKnight.setLocation(425, 30);
+        initKnight.setText("Knight");
+        initKnight.addActionListener(new ActionListener()
+        {
+            public void actionPerformed(ActionEvent e)
+            {
+                if(state.Convert)
                 {
-                    state.Board[state.cRow][state.cColumn] = wdead[i].getText();
-                    state.wDead.remove(i);
-                    state.wDead.add("wp");
-                    wdead[i].setText("");
-                    wdead[i].setIcon(null);
+                    if(state.cTurn == "b")
+                    {
+                        state.Board[state.cRow][state.cColumn] = "bn";
+                        state.bDead.add("bp");
+                    }
+                    else if(state.cTurn == "w")
+                    {
+                        state.Board[state.cRow][state.cColumn] = "wn";
+                        state.wDead.add("wp");
+                    }
                     state.Convert = false;
                     state.changeTurn();
+                    Render();
+                    RenderDead();
+                    state.update();
                 }
-                else if(state.cTurn == "b")
+
+            }
+        });
+        add(initKnight);
+        initKnight.setVisible(true);
+    }
+    void initQueenButton()
+    {
+        initQueen.setSize(125, 40);
+        initQueen.setLocation(575, 30);
+        initQueen.setText("Queen");
+        initQueen.addActionListener(new ActionListener()
+        {
+            public void actionPerformed(ActionEvent e)
+            {
+                if(state.Convert)
                 {
-                    state.Board[state.cRow][state.cColumn] = bdead[i].getText();
-                    state.bDead.remove(i);
-                    state.bDead.add("bp");
-                    bdead[i].setText("");
-                    bdead[i].setIcon(null);
+                    if(state.cTurn == "b")
+                    {
+                        state.Board[state.cRow][state.cColumn] = "bq";
+                        state.bDead.add("bp");
+                    }
+                    else if(state.cTurn == "w")
+                    {
+                        state.Board[state.cRow][state.cColumn] = "wq";
+                        state.wDead.add("wp");
+                    }
                     state.Convert = false;
                     state.changeTurn();
+                    Render();
+                    RenderDead();
+                    state.update();
                 }
-      		}
-            state.update();
-            Render();
-            RenderDead();
-      	}
-   	}
+            }
+        });
+        add(initQueen);
+        initQueen.setVisible(true);
+    }
     public void init(int p_width, int p_height)
     {
         setTitle("Freeza Chess");
@@ -119,7 +180,11 @@ public class Window extends JFrame
         initBar();
         initBarDead();
         initBoard();
+        initFreezaButton();
+        initGameButton();
+        initKnightButton();
         initListeners();
+        initQueenButton();
         state.newGame();
         Render();
     }
@@ -139,7 +204,7 @@ public class Window extends JFrame
     //
     void initBarDead()
     {
-        for(int i = 0; i < 15; i++)
+        for(int i = 0; i < 23; i++)
         {
        		wdead[i] = new JLabel();
         	wdead[i].setBackground(Color.darkGray);
@@ -150,12 +215,16 @@ public class Window extends JFrame
 	        {
 	           wdead[i].setLocation(1000, (i+1) * 125 - 50);
 	        }
-	        else
+	        else if(i > 7 && i < 16)
 	        {
 	           wdead[i].setLocation(1125, (i+1 - 7) * 125 - 175);
 	        }
+            else if(i > 15 && i < 23)
+            {
+               wdead[i].setLocation(1250, (i+1 - 15) * 125 - 175);
+            }
      	}
-     	for(int i = 0; i < 15; i++)
+     	for(int i = 0; i < 23; i++)
       	{
          	bdead[i] = new JLabel();
          	bdead[i].setBackground(Color.darkGray);
@@ -164,12 +233,16 @@ public class Window extends JFrame
         	bdead[i].setSize(100,100);
         	if(i < 8)
          	{
-          	    bdead[i].setLocation(1250, (i+1) * 125 - 50);
+          	    bdead[i].setLocation(1375, (i+1) * 125 - 50);
         	}
-        	else
+        	else if(i > 7 && i < 16)
         	{
-            	bdead[i].setLocation(1375, (i+1 - 7) * 125 - 175);
+            	bdead[i].setLocation(1500, (i+1 - 7) * 125 - 175);
         	}
+            else if(i > 15 && i < 23)
+            {
+                bdead[i].setLocation(1625, (i+1 - 15) * 125 - 175);
+            }
       	}
    	}
     //
@@ -206,11 +279,6 @@ public class Window extends JFrame
             	spots[i][j].addMouseListener(new listen(i, j));
          	}
       	}
-        for(int i = 0; i < 15; i++)
-        {
-        	wdead[i].addMouseListener(new dlisten(i));
-        	bdead[i].addMouseListener(new dlisten(i));
-        }
     }
 	//
     // render total board
@@ -282,7 +350,7 @@ public class Window extends JFrame
     {
         if(!state.wDead.isEmpty())
         {
-            for(int i = 0; i <= state.wDead.size() - 1; i++)
+            for(int i = 0; i < state.wDead.size(); i++)
             {
                 switch(state.wDead.get(i))
                 {
@@ -308,7 +376,7 @@ public class Window extends JFrame
                     break;
                 }
             }
-            for(int i = state.wDead.size(); i < 15; i++)
+            for(int i = state.wDead.size(); i < 23; i++)
             {
                 wdead[i].setIcon(null);
                 wdead[i].setText("");         
@@ -316,7 +384,7 @@ public class Window extends JFrame
         }
         else
         {
-            for(int i = state.wDead.size(); i < 15; i++)
+            for(int i = state.wDead.size(); i < 23; i++)
             {
                 wdead[i].setIcon(null);
                 wdead[i].setText("");         
@@ -324,7 +392,7 @@ public class Window extends JFrame
         }
         if(!state.bDead.isEmpty())
         {
-            for(int i = 0; i <= state.bDead.size() - 1; i++)
+            for(int i = 0; i < state.bDead.size(); i++)
             {
                 switch(state.bDead.get(i))
                 {
@@ -350,7 +418,7 @@ public class Window extends JFrame
                     break;
                 }
             }
-            for(int i = state.bDead.size(); i < 15; i++)
+            for(int i = state.bDead.size(); i < 23; i++)
             {
                 bdead[i].setIcon(null);
                 bdead[i].setText("");         
@@ -358,7 +426,7 @@ public class Window extends JFrame
         }
         else
         {
-            for(int i = state.bDead.size(); i < 15; i++)
+            for(int i = state.bDead.size(); i < 23; i++)
             {
                 bdead[i].setIcon(null);
                 bdead[i].setText("");         
