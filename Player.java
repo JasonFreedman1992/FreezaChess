@@ -10,7 +10,6 @@ public class Player
 	}
 	State state = new State();
 	int clickCount;
-	public boolean pass;                  // currently pass is used only for debugging, not a part of the actual running.
 	int startRow;
 	int startColumn;
 	int endRow;
@@ -22,10 +21,8 @@ public class Player
 		{
 			if(clickCount == 0)
 			{
-				pass = false;
 				if(sameType(p_type))
 				{
-					pass = true;
 					startRow = p_row;
 					startColumn = p_column;
 					type = p_type;
@@ -40,12 +37,15 @@ public class Player
 			{
 				endRow = p_row;
 				endColumn = p_column;
-				logic.Evaluate(startRow, startColumn, endRow, endColumn, type);
+				if(logic.Evaluate(startRow, startColumn, endRow, endColumn, type))
+				{
+					if(!state.Convert)
+					{
+						state.changeTurn();
+					}
+				}
+				clickCount = 0;
 			}
-		}
-		else
-		{
-
 		}
 	}
 

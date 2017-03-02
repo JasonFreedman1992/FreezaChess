@@ -44,6 +44,7 @@ public class Window extends JFrame
         }
         public void mouseClicked(MouseEvent e)
         {
+            System.out.println("spot: " + row + " , " + column);
         	if(!state.Convert)
         	{
         		row = i;
@@ -51,15 +52,17 @@ public class Window extends JFrame
         		type = state.Board[i][j];
         		if(state.Turn == "w")
         		{
+                    System.out.println("state turn = w");
         			WPlayer.run(row, column, type);
-        			System.out.println(WPlayer.logic.moves.pass);
         		}
         		else
         		{
+                    System.out.println("state turn = b");
         			BPlayer.run(row, column, type);
-        			System.out.println(BPlayer.logic.moves.pass);
         		}
-            	System.out.println("spot: " + row + " , " + column);
+                state.update();
+                Render();
+                RenderDead();
         	}
         }
     }
@@ -79,12 +82,30 @@ public class Window extends JFrame
       		System.out.println("dead spot: " + i);
       		if(state.Convert)
       		{
-
+                if(state.cTurn == "w")
+                {
+                    state.Board[state.cRow][state.cColumn] = wdead[i].getText();
+                    state.wDead.remove(i);
+                    state.wDead.add("wp");
+                    wdead[i].setText("");
+                    wdead[i].setIcon(null);
+                    state.Convert = false;
+                    state.changeTurn();
+                }
+                else if(state.cTurn == "b")
+                {
+                    state.Board[state.cRow][state.cColumn] = bdead[i].getText();
+                    state.bDead.remove(i);
+                    state.bDead.add("bp");
+                    bdead[i].setText("");
+                    bdead[i].setIcon(null);
+                    state.Convert = false;
+                    state.changeTurn();
+                }
       		}
-      		else
-      		{
-
-      		}
+            state.update();
+            Render();
+            RenderDead();
       	}
    	}
     public void init(int p_width, int p_height)
@@ -257,4 +278,91 @@ public class Window extends JFrame
             	break;
       	}
    	}
+    private void RenderDead()
+    {
+        if(!state.wDead.isEmpty())
+        {
+            for(int i = 0; i <= state.wDead.size() - 1; i++)
+            {
+                switch(state.wDead.get(i))
+                {
+                case "wc":
+                    wdead[i].setIcon(wc);
+                    wdead[i].setText("wc");
+                    break;
+                case "wn":
+                    wdead[i].setIcon(wn);
+                    wdead[i].setText("wn");
+                    break;
+                case "wb":
+                    wdead[i].setIcon(wb);
+                    wdead[i].setText("wb");
+                    break;
+                case "wq":
+                    wdead[i].setIcon(wq);
+                    wdead[i].setText("wq");
+                    break;
+                case "wp":
+                    wdead[i].setIcon(wp);
+                    wdead[i].setText("wp");
+                    break;
+                }
+            }
+            for(int i = state.wDead.size(); i < 15; i++)
+            {
+                wdead[i].setIcon(null);
+                wdead[i].setText("");         
+            }
+        }
+        else
+        {
+            for(int i = state.wDead.size(); i < 15; i++)
+            {
+                wdead[i].setIcon(null);
+                wdead[i].setText("");         
+            }
+        }
+        if(!state.bDead.isEmpty())
+        {
+            for(int i = 0; i <= state.bDead.size() - 1; i++)
+            {
+                switch(state.bDead.get(i))
+                {
+                case "bc":
+                    bdead[i].setIcon(bc);
+                    bdead[i].setText("bc");
+                    break;
+                case "bn":
+                    bdead[i].setIcon(bn);
+                    bdead[i].setText("bn");
+                    break;
+                case "bb":
+                    bdead[i].setIcon(bb);
+                    bdead[i].setText("bb");
+                    break;
+                case "bq":
+                    bdead[i].setIcon(bq);
+                    bdead[i].setText("bq");
+                    break;
+                case "bp":
+                    bdead[i].setIcon(bp);
+                    bdead[i].setText("bp");
+                    break;
+                }
+            }
+            for(int i = state.bDead.size(); i < 15; i++)
+            {
+                bdead[i].setIcon(null);
+                bdead[i].setText("");         
+            }
+        }
+        else
+        {
+            for(int i = state.bDead.size(); i < 15; i++)
+            {
+                bdead[i].setIcon(null);
+                bdead[i].setText("");         
+            }
+        }
+    } 
 }

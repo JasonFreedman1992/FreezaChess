@@ -3,17 +3,16 @@ public abstract class Freeza
 	State state = new State();
 	public void run()
 	{
-		if(state.Convert == false)
+		//
+		// while not state.Convert
+		//
+		if(!state.Convert)
 		{
-			if(!state.Convert)
-			{
-				
-			}
-			else
-			{
-				
-			}
+
 		}
+		//
+		// while state.Convert
+		//
 		else
 		{
 			

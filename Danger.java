@@ -4,19 +4,21 @@ public class Danger
 	String OTeam;
 	State state = new State();
 	void setOTeam()
-	{
-		if(Team == "w")
-		{
-			OTeam = "b";
-		}
-		else
-		{
-			OTeam = "w";
-		}
+   {
+      if(state.Turn.equals("w"))
+      {
+         OTeam = "b";
+      }
+      else if(state.Turn.equals("b"))
+      {
+         OTeam = "w";
+      }
 	}
 	public boolean inDanger(int p_row, int p_column)
 	{
-		setOTeam();
+         setOTeam();
+         System.out.println("OTEAM = " + OTeam);
+         System.out.println("state.Turn = " + state.Turn);
       	// down
       	for(int i = 1; i < 8; i++)
       	{
@@ -24,11 +26,11 @@ public class Danger
          	{
             	if(!state.Board[p_row + i][p_column].startsWith(OTeam+"c") && !state.Board[p_row + i][p_column].startsWith(OTeam+"q") && !state.Board[p_row + i][p_column].startsWith("z"))
             	{
-               		break;
+               	break;
             	}
-            	else if((state.Board[p_row + i][p_column] == OTeam+"c") || (state.Board[p_row + i][p_column] == OTeam+"q"))
+            	else if((state.Board[p_row + i][p_column].equals(OTeam+"c")) || (state.Board[p_row + i][p_column].equals(OTeam+"q")))
             	{
-               		return true;
+               	return true;
             	}
          	}
       	}
@@ -39,26 +41,26 @@ public class Danger
          	{
             	if(!state.Board[p_row - i][p_column].startsWith(OTeam+"c") && !state.Board[p_row - i][p_column].startsWith(OTeam+"q") && !state.Board[p_row - i][p_column].startsWith("z"))
             	{
-               		break;
+               	break;
             	}
-            	else if((state.Board[p_row - i][p_column] == OTeam+"c") || (state.Board[p_row - i][p_column] == OTeam+"q"))
+            	else if((state.Board[p_row - i][p_column].equals(OTeam+"c")) || (state.Board[p_row - i][p_column].equals(OTeam+"q")))
             	{
-               		return true;
+               	return true;
             	}
          	}
       	}
-      	// right
+      	// right;
       	for(int i = 1; i < 8; i++)
       	{
          	if(p_column + i < 8)
          	{
-            	if(state.Board[p_row][p_column + i].startsWith(OTeam+"c") && !state.Board[p_row][p_column + i].startsWith(OTeam+"q") && !state.Board[p_row][p_column + i].startsWith("z"))
+            	if(!state.Board[p_row][p_column + i].startsWith(OTeam+"c") && !state.Board[p_row][p_column + i].startsWith(OTeam+"q") && !state.Board[p_row][p_column + i].startsWith("z"))
             	{
-               		break;
+               	break;
             	}
-            	else if((state.Board[p_row][p_column + i] == OTeam+"c") || (state.Board[p_row][p_column + i] == OTeam+"q"))
+            	else if((state.Board[p_row][p_column + i].equals(OTeam+"c")) || (state.Board[p_row][p_column + i].equals(OTeam+"q")))
             	{
-               		return true;
+               	return true;
             	}
          	}
       	}
@@ -68,15 +70,15 @@ public class Danger
          	if(p_column - i >= 0)
          	{
             	if(!state.Board[p_row][p_column - i].startsWith(OTeam+"c") && !state.Board[p_row][p_column - i].startsWith(OTeam+"q") && !state.Board[p_row][p_column - i].startsWith("z"))	
-        		{
+        		   {
         	   		break;
            		}
-        	}
-            else if((state.Board[p_row][p_column - i] == OTeam+"c") || (state.Board[p_row][p_column - i] == OTeam+"q"))
-            {
-               return true;
+               else if((state.Board[p_row][p_column - i].equals(OTeam+"c")) || (state.Board[p_row][p_column - i].equals(OTeam+"q")))
+               {
+                  return true;
+               }
             }
-        }
+         }
       	//down right
       	for(int i = 1; i < 8; i++)
       	{
@@ -86,11 +88,11 @@ public class Danger
             	{
               	 	break;
             	}
-            	else if((state.Board[p_row + i][p_column + i] == OTeam+"b") || (state.Board[p_row + i][p_column +i] == OTeam+"q"))
+            	else if((state.Board[p_row + i][p_column + i].equals(OTeam+"b")) || (state.Board[p_row + i][p_column +i].equals(OTeam+"q")))
             	{
-               		return true;
+               	return true;
             	}
-        	}
+        	   }
       	}
       	// down left
       	for(int i = 1; i < 8; i++)
@@ -99,11 +101,11 @@ public class Danger
          	{
             	if(!state.Board[p_row + i][p_column - i].startsWith(OTeam+"b") && !state.Board[p_row + i][p_column - i].startsWith(OTeam+"q")  && !state.Board[p_row + i][p_column - i].startsWith("z"))
             	{
-               		break;
+               	break;
             	}
-            	else if((state.Board[p_row + i][p_column - i] == OTeam+"b") || (state.Board[p_row + i][p_column - i] == OTeam+"q"))
+            	else if((state.Board[p_row + i][p_column - i].equals(OTeam+"b")) || (state.Board[p_row + i][p_column - i].equals(OTeam+"q")))
             	{
-               		return true;
+               	return true;
             	}
          	}
       	}
@@ -114,11 +116,11 @@ public class Danger
          	{
             	if(!state.Board[p_row - i][p_column + i].startsWith(OTeam+"b") && !state.Board[p_row - i][p_column + i].startsWith(OTeam+"q") && !state.Board[p_row - i][p_column + i].startsWith("z"))
             	{
-               		break;
+                  break;
             	}
-            	else if((state.Board[p_row - i][p_column + i] == OTeam+"b") || (state.Board[p_row - i][p_column + i] == OTeam+"q"))
+            	else if((state.Board[p_row - i][p_column + i].equals(OTeam+"b")) || (state.Board[p_row - i][p_column + i].equals(OTeam+"q")))
             	{
-               		return true;
+                  return true;
             	}
          	}
       	}
@@ -127,20 +129,20 @@ public class Danger
       	{
          	if(p_row - i >= 0 && p_column - i >= 0)
          	{
-            	if(!state.Board[p_row - i][p_column - i].startsWith(OTeam+"b") && !state.Board[p_row - i][p_column - i].startsWith(OTeam+"q") && !state.Board[p_row - i][p_column - i].startsWith("z"))
+            	if(!state.Board[p_row - i][p_column - i].equals(OTeam+"b") && !state.Board[p_row - i][p_column - i].equals(OTeam+"q") && !state.Board[p_row - i][p_column - i].equals("z"))
             	{
-               		break;
+               	break;
             	}
-            	else if((state.Board[p_row - i][p_column - i] == OTeam+"b") || (state.Board[p_row - i][p_column - i] == OTeam+"q"))
+            	else if((state.Board[p_row - i][p_column - i].equals(OTeam+"b")) || (state.Board[p_row - i][p_column - i].equals(OTeam+"q")))
             	{
-               		return true;
+               	return true;
             	}
          	}
       	}
       	// knight check
       	if(p_row + 1 < 8 && p_column + 2 < 8)
       	{
-         	if(state.Board[p_row + 1][p_column + 2] == OTeam+"n")
+         	if(state.Board[p_row + 1][p_column + 2].equals(OTeam+"n"))
          	{
             	return true;
          	}
@@ -148,15 +150,15 @@ public class Danger
       	// knight check
       	if(p_row - 1 >= 0 && p_column + 2 < 8)
       	{
-         	if(state.Board[p_row - 1][p_column + 2] == OTeam+"n")
+         	if(state.Board[p_row - 1][p_column + 2].equals(OTeam+"n"))
          	{
             	return true;
          	}
       	}
       	// knight check
-     	 if(p_row - 2 >= 0 && p_column + 1 < 8)
+     	   if(p_row - 2 >= 0 && p_column + 1 < 8)
       	{
-         	if(state.Board[p_row - 2][p_column + 1] == OTeam+"n")
+         	if(state.Board[p_row - 2][p_column + 1].equals(OTeam+"n"))
          	{
             	return true;
          	}
@@ -164,7 +166,7 @@ public class Danger
       	// knight check
       	if(p_row - 2 >= 0 && p_column - 1 >= 0)
       	{
-         	if(state.Board[p_row - 2][p_column - 1] == OTeam+"n")
+         	if(state.Board[p_row - 2][p_column - 1].equals(OTeam+"n"))
          	{
             	return true;
          	}
@@ -172,7 +174,7 @@ public class Danger
       	// knight check
       	if(p_row - 1 >= 0 && p_column - 2 >= 0)
       	{
-         	if(state.Board[p_row - 1][p_column - 2] == OTeam+"n")
+         	if(state.Board[p_row - 1][p_column - 2].equals(OTeam+"n"))
          	{
             	return true;
          	}
@@ -180,15 +182,15 @@ public class Danger
       	// knight check
       	if(p_row + 1 < 8 && p_column - 2 >= 0)
       	{
-         	if(state.Board[p_row + 1][p_column - 2] == OTeam+"n")
+         	if(state.Board[p_row + 1][p_column - 2].equals(OTeam+"n"))
          	{
             	return true;
          	}
       	}
-     	// knight check
+     	   // knight check
       	if(p_row + 2 < 8 && p_column - 1 >= 0)
       	{
-         	if(state.Board[p_row + 2][p_column - 1] == OTeam+"n")
+         	if(state.Board[p_row + 2][p_column - 1].equals(OTeam+"n"))
          	{
             	return true;
          	}
@@ -196,31 +198,15 @@ public class Danger
       	// knight check
       	if(p_row + 2 < 8 && p_column + 1 < 8)
       	{
-         	if(state.Board[p_row + 2][p_column + 1] == OTeam+"n")
-         	{
-            	return true;
-         	}
-      	}
-      	// pawn check against b pawns
-      	if(p_row + 1 < 8 && p_column + 1 < 8)
-      	{
-         	if(state.Board[p_row +1][p_column + 1] == OTeam+"p")
-         	{
-            	return true;
-         	}
-      	}
-      	// pawn check against b pawns
-      	if(p_row + 1 < 8 && p_column - 1 >= 0)
-      	{
-         	if(state.Board[p_row +1 ][p_column - 1] == OTeam+"p")
+         	if(state.Board[p_row + 2][p_column + 1].equals(OTeam+"n"))
          	{
             	return true;
          	}
       	}
       	// up opposite king check
       	if(p_row - 1 >= 0)
-     	{
-         	if(state.Board[p_row - 1][p_column] == OTeam+"k")
+     	   {
+         	if(state.Board[p_row - 1][p_column].equals(OTeam+"k"))
          	{
             	return true;
          	}
@@ -228,7 +214,7 @@ public class Danger
       	// down opposite king check
       	if(p_row + 1 < 8)
       	{
-         	if(state.Board[p_row + 1][p_column] == OTeam+"k")
+         	if(state.Board[p_row + 1][p_column].equals(OTeam+"k"))
          	{
             	return true;
          	}
@@ -236,7 +222,7 @@ public class Danger
       	//right opposite king check
       	if(p_column + 1 < 8)
       	{
-         	if(state.Board[p_row][p_column + 1] == OTeam+"k")
+         	if(state.Board[p_row][p_column + 1].equals(OTeam+"k"))
          	{
             	return true;
          	}
@@ -244,15 +230,15 @@ public class Danger
       	//left opposite king check
       	if(p_column - 1 >= 0)
       	{
-         	if(state.Board[p_row][p_column - 1] == OTeam+"k")
+         	if(state.Board[p_row][p_column - 1].equals(OTeam+"k"))
          	{
             	return true;
          	}
-     	 }
+     	   }
       	// down right king check
       	if(p_row + 1 < 8 & p_column + 1 < 8)
       	{
-         	if(state.Board[p_row + 1][p_column + 1] == OTeam+"k")
+         	if(state.Board[p_row + 1][p_column + 1].equals(OTeam+"k"))
          	{
             	return true;
          	}
@@ -260,7 +246,7 @@ public class Danger
       	// down left king check
       	if(p_row + 1 < 8 & p_column - 1 >= 0)
       	{
-         	if(state.Board[p_row + 1][p_column - 1] == OTeam+"k")
+         	if(state.Board[p_row + 1][p_column - 1].equals(OTeam+"k"))
          	{
             	return true;
          	}
@@ -268,7 +254,7 @@ public class Danger
       	// up right king check
       	if(p_row - 1 >= 0 & p_column + 1 < 8)
       	{
-         	if(state.Board[p_row - 1][p_column + 1] == OTeam+"k")
+         	if(state.Board[p_row - 1][p_column + 1].equals(OTeam+"k"))
          	{
             	return true;
          	}
@@ -276,11 +262,48 @@ public class Danger
       	// up left king check
       	if(p_row - 1 >= 0 & p_column - 1 >= 0)
       	{
-         	if(state.Board[p_row - 1][p_column - 1] == OTeam+"k")
+         	if(state.Board[p_row - 1][p_column - 1].equals(OTeam+"k"))
          	{
             	return true;
          	}
       	}
-	    return false;
-	}
+
+         // pawn check against b pawns
+         if(OTeam.equals("b"))
+         {
+            if(p_row + 1 < 8 && p_column + 1 < 8)
+            {
+               if(state.Board[p_row + 1][p_column + 1].equals(OTeam+"p"))
+               {
+                  return true;
+               }
+            }
+            if(p_row + 1 < 8 && p_column - 1 >= 0)
+            {
+               if(state.Board[p_row + 1][p_column - 1].equals(OTeam+"p"))
+               {
+                  return true;
+               }
+            }
+         }
+         // pawn check against w pawns
+         else if(OTeam.equals("w"))
+         {
+            if(p_row - 1 >= 0 && p_column + 1 < 8)
+            {
+               if(state.Board[p_row - 1][p_column + 1].equals(OTeam+"p"))
+               {
+                  return true;
+               }
+            }
+            if(p_row - 1 >= 0 && p_column - 1 >= 0)
+            {
+               if(state.Board[p_row - 1][p_column - 1].equals(OTeam+"p"))
+               {
+                  return true;
+               }
+            }
+         }
+	      return false;
+    }
 }

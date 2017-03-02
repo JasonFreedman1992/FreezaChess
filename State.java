@@ -3,15 +3,18 @@ import java.util.*;
 public class State
 {
     public static ArrayList<String> wDead = new ArrayList<String>(); 
-	  public static ArrayList<String> bDead = new ArrayList<String>();
-	  public static ArrayList<inf>wAlive = new ArrayList<inf>();
-	  public static ArrayList<inf>bAlive = new ArrayList<inf>();
+	public static ArrayList<String> bDead = new ArrayList<String>();
+	public static ArrayList<inf>wAlive = new ArrayList<inf>();
+	public static ArrayList<inf>bAlive = new ArrayList<inf>();
+    public static ArrayList<hinf>wHolds = new ArrayList<hinf>();
+    public static ArrayList<hinf>bHolds = new ArrayList<hinf>();
     public static boolean wCastleUpLeftMoved = false;
     public static boolean wCastleUpRightMoved = false;
     public static boolean wKingMoved = false;
-	  public static boolean bCastleDownLeftMoved = false;
+	public static boolean bCastleDownLeftMoved = false;
     public static boolean bCastleDownRightMoved = false;
     public static boolean bKingMoved = false;
+
     public static boolean Convert = false;
     public static boolean cHold = false;
     public static boolean bcHold = false;
@@ -19,15 +22,73 @@ public class State
     public static boolean checkMate = false;
     public static boolean staleMate = false;
 
-	  public static String Turn = "b";
-	  public static String[][] Board = new String[8][8];
-    
-    public void updateState()
-    {
+    public static boolean kill = false;
 
+	public static String Turn = "b";
+    public static String cTurn = "";
+    public static int cRow = 0;
+    public static int cColumn = 0;
+	public static String[][] Board = new String[8][8];
+
+    public void addbHold(int p_row, int p_column)
+    {
+        bHolds.add(new hinf(p_row, p_column));
+    }
+    public void addwHold(int p_row, int p_column)
+    {
+        wHolds.add(new hinf(p_row, p_column));
+    }
+    public void changeTurn()
+    {
+        if(Turn == "w")
+        {
+            Turn = "b";
+        }
+        else if(Turn == "b")
+        {
+            Turn = "w";
+        }
+    }
+    public void update()
+    {
+        updateAlive();
+        if(!wKingMoved && Board[0][4] != "wk")
+        {
+            wKingMoved = true;
+            wCastleUpRightMoved = true;
+            wCastleUpLeftMoved = true;
+        }
+        if(!wCastleUpLeftMoved && Board[0][0] != "wc")
+        {
+            wCastleUpLeftMoved = true;
+        }
+        if(!wCastleUpRightMoved && Board[0][7] != "wc")
+        {
+            wCastleUpRightMoved = true;
+        }
+        if(!bKingMoved && Board[7][4] != "bk")
+        {
+            bKingMoved = true;
+            bCastleDownRightMoved = true;
+            bCastleDownLeftMoved = true;
+        }
+        if(!bCastleDownLeftMoved && Board[7][0] != "bc")
+        {
+            bCastleDownLeftMoved = true;
+        }
+        if(!bCastleDownRightMoved && Board[7][7] != "bc")
+        {
+            bCastleDownRightMoved = true;
+        }
     }
     public void newGame()
     {
+        wCastleUpLeftMoved = false;
+        wCastleUpRightMoved = false;
+        wKingMoved = false;
+        bCastleDownLeftMoved = false;
+        bCastleDownRightMoved = false;
+        bKingMoved = false;
         //
         // initialize with all blanks at first
         //
@@ -49,18 +110,16 @@ public class State
         Board[0][5] = "wb";
         Board[0][6] = "wn";
         Board[0][7] = "wc";
-        // for(int i = 0; i < 8; i++)
-        // {
-        //    Board[1][i] = "wp";
-        // }
+        for(int i = 0; i < 8; i++)
+        {
+           Board[1][i] = "wp";
+        }
       
-        //
-        // set black pieces
-        //
-        // for(int i = 0; i < 8; i++)
-        // {
-        //    Board[6][i] = "bp";
-        // }
+        //set black pieces
+        for(int i = 0; i < 8; i++)
+        {
+           Board[6][i] = "bp";
+        }
         Board[7][0] = "bc";
         Board[7][1] = "bn";
         Board[7][2] = "bb";
@@ -69,36 +128,51 @@ public class State
         Board[7][5] = "bb";
         Board[7][6] = "bn";
         Board[7][7] = "bc";  
+        update();
     }
-   	private void updateAlive()
+   	void updateAlive()
    	{
       	wAlive.clear();
       	bAlive.clear();
       	for(int i = 0; i < 8; i++)
       	{
-         	  for(int j = 0; j < 8; j++)
-         	  {
+         	for(int j = 0; j < 8; j++)
+         	{
               	if(Board[i][j].startsWith("b"))
-            	  {
+            	{
               	  	bAlive.add(new inf(Board[i][j],i,j));
-            	  }
+            	}
            	    if(Board[i][j].startsWith("w"))
-            	  {
-                		wAlive.add(new inf(Board[i][j],i,j));
-            	  }
+            	{
+                	wAlive.add(new inf(Board[i][j],i,j));
+            	}
            	}
       	}
    	}
-	  class inf
-	  {
-		    int startRow = 0;
-		    int startColumn = 0;
-		    String type = "";
+    void updateHold()
+    {
+
+    }
+    class inf
+    {
+	    int startRow = 0;
+	    int startColumn = 0;
+	    String type = "";
         inf(String p_type, int p_startRow, int p_startColumn)
         {
             startRow = p_startRow;
             startColumn = p_startColumn;
             type = p_type;
         }
-	  }
+    }
+    class hinf
+    {
+        int startRow = 0;
+        int startColumn = 0;
+        hinf(int p_startRow, int p_startColumn)
+        {
+            startRow = p_startRow;
+            startColumn = p_startColumn;
+        }
+    }
 }
