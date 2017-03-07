@@ -45,6 +45,35 @@ public class Logic
 			return false;
 		}
 	}
+    public boolean CMEvaluate(int p_startRow, int p_startColumn, int p_endRow, int p_endColumn, String p_type)
+    {
+        if(!sameType(p_endRow, p_endColumn))
+        {
+            if(moves.Legal(p_startRow, p_startColumn, p_endRow, p_endColumn, p_type))
+            {
+                moveTemp(p_startRow, p_startColumn, p_endRow, p_endColumn);
+                checkKing();
+                if(!danger.inDanger(kRow, kColumn))
+                {
+                    moveBack(p_startRow, p_startColumn, p_endRow, p_endColumn);
+                    return true;
+                }
+                else
+                {
+                    moveBack(p_startRow, p_startColumn, p_endRow, p_endColumn);
+                    return false;
+                }
+            }
+            else
+            {
+                return false;
+            }
+        }
+        else
+        {
+            return false;
+        }
+    }
 
 	boolean sameType(int p_endRow, int p_endColumn)
 	{
@@ -91,33 +120,11 @@ public class Logic
     			}
     		}
     	}
-    	// if(Team.equals("w"))
-    	// {
-    	// 	for(int i = 0; i < state.wAlive.size(); i++)
-    	// 	{
-    	// 		if(state.wAlive.get(i).type == "wk")
-    	// 		{
-    	// 			kRow = state.wAlive.get(i).startRow;
-    	// 			kColumn = state.wAlive.get(i).startColumn;
-    	// 		}
-    	// 	}
-    	// }
-    	// else if(Team.equals("b"))
-    	// {	
-    	// 	for(int i = 0; i < state.bAlive.size(); i++)
-    	// 	{
-    	// 		if(state.bAlive.get(i).type == "bk")
-    	// 		{
-    	// 			kRow = state.bAlive.get(i).startRow;
-    	// 			kColumn = state.bAlive.get(i).startColumn;
-    	// 		}
-    	// 	}
-    	// }
     }
 
     void checkKill()
     {
-    	if(!tempPieceEnd.startsWith(Team) && !tempPieceEnd.startsWith("z"))
+    	if(!tempPieceEnd.startsWith(Team) && tempPieceEnd != "z")
     	{
     		if(Team.equals("b"))
     		{

@@ -3,8 +3,26 @@ public class Danger
 	String Team;
 	String OTeam;
 	State state = new State();
+   Moves moves = new Moves();
    String tempPieceEnd;
    String tempPieceStart;
+   String rangeType;
+   int rangeRow;
+   int rangeColumn;
+   String checkType;
+   int checkRow;
+   int checkColumn;
+   boolean checkUp;
+   boolean checkDown;
+   boolean checkRight;
+   boolean checkLeft;
+   boolean checkUpRight;
+   boolean checkUpLeft;
+   boolean checkDownRight;
+   boolean checkDownLeft;
+   boolean checkPawn;
+   boolean checkKnight;
+
 	void setOTeam()
    {
       if(state.Turn.equals("w"))
@@ -20,8 +38,6 @@ public class Danger
 	public boolean inDanger(int p_row, int p_column)
 	{
          setOTeam();
-         System.out.println("OTEAM = " + OTeam);
-         System.out.println("state.Turn = " + state.Turn);
       	// down
       	for(int i = 1; i < 8; i++)
       	{
@@ -33,7 +49,10 @@ public class Danger
             	}
             	else if((state.Board[p_row + i][p_column].equals(OTeam+"c")) || (state.Board[p_row + i][p_column].equals(OTeam+"q")))
             	{
-
+                  checkType = state.Board[p_row + i][p_column];
+                  checkRow = p_row + i;
+                  checkColumn = p_column;
+                  checkDown = true;
                	return true;
             	}
          	}
@@ -49,6 +68,10 @@ public class Danger
             	}
             	else if((state.Board[p_row - i][p_column].equals(OTeam+"c")) || (state.Board[p_row - i][p_column].equals(OTeam+"q")))
             	{
+                  checkType = state.Board[p_row - i][p_column];
+                  checkRow = p_row - i;
+                  checkColumn = p_column;
+                  checkUp = true;
                	return true;
             	}
          	}
@@ -64,6 +87,10 @@ public class Danger
             	}
             	else if((state.Board[p_row][p_column + i].equals(OTeam+"c")) || (state.Board[p_row][p_column + i].equals(OTeam+"q")))
             	{
+                  checkType = state.Board[p_row][p_column + i];
+                  checkRow = p_row;
+                  checkColumn = p_column + i;
+                  checkRight = true;
                	return true;
             	}
          	}
@@ -79,6 +106,10 @@ public class Danger
            		}
                else if((state.Board[p_row][p_column - i].equals(OTeam+"c")) || (state.Board[p_row][p_column - i].equals(OTeam+"q")))
                {
+                  checkType = state.Board[p_row][p_column - i];
+                  checkRow = p_row;
+                  checkColumn = p_column - i;
+                  checkLeft = true;
                   return true;
                }
             }
@@ -94,6 +125,10 @@ public class Danger
             	}
             	else if((state.Board[p_row + i][p_column + i].equals(OTeam+"b")) || (state.Board[p_row + i][p_column +i].equals(OTeam+"q")))
             	{
+                  rangeType = state.Board[p_row + i][p_column + i];
+                  checkRow = p_row + i;
+                  checkColumn = p_column + i;
+                  checkDownRight = true;
                	return true;
             	}
         	   }
@@ -109,6 +144,10 @@ public class Danger
             	}
             	else if((state.Board[p_row + i][p_column - i].equals(OTeam+"b")) || (state.Board[p_row + i][p_column - i].equals(OTeam+"q")))
             	{
+                  checkType = state.Board[p_row + i][p_column - i];
+                  checkRow = p_row + i;
+                  checkColumn = p_column - i;
+                  checkDownLeft = true;
                	return true;
             	}
          	}
@@ -124,6 +163,10 @@ public class Danger
             	}
             	else if((state.Board[p_row - i][p_column + i].equals(OTeam+"b")) || (state.Board[p_row - i][p_column + i].equals(OTeam+"q")))
             	{
+                  checkType = state.Board[p_row - i][p_column + i];
+                  checkRow = p_row - i;
+                  checkColumn = p_column + i;
+                  checkUpRight = true;
                   return true;
             	}
          	}
@@ -139,6 +182,10 @@ public class Danger
             	}
             	else if((state.Board[p_row - i][p_column - i].equals(OTeam+"b")) || (state.Board[p_row - i][p_column - i].equals(OTeam+"q")))
             	{
+                  checkType = state.Board[p_row - i][p_column - i];
+                  checkRow = p_row - i;
+                  checkColumn = p_column - i;
+                  checkUpLeft = true;
                	return true;
             	}
          	}
@@ -148,6 +195,10 @@ public class Danger
       	{
          	if(state.Board[p_row + 1][p_column + 2].equals(OTeam+"n"))
          	{
+               checkType = state.Board[p_row + 1][p_column + 2];
+               checkRow = p_row + 1;
+               checkColumn = p_column + 2;
+               checkKnight = true;
             	return true;
          	}
       	}
@@ -156,6 +207,10 @@ public class Danger
       	{
          	if(state.Board[p_row - 1][p_column + 2].equals(OTeam+"n"))
          	{
+               checkType = state.Board[p_row - 1][p_column + 2];
+               checkRow = p_row - 1;
+               checkColumn = p_column + 2;
+               checkKnight = true;
             	return true;
          	}
       	}
@@ -164,6 +219,10 @@ public class Danger
       	{
          	if(state.Board[p_row - 2][p_column + 1].equals(OTeam+"n"))
          	{
+               checkType = state.Board[p_row - 2][p_column + 1];
+               checkRow = p_row - 2;
+               checkColumn = p_column + 1;
+               checkKnight = true;
             	return true;
          	}
       	}
@@ -172,6 +231,10 @@ public class Danger
       	{
          	if(state.Board[p_row - 2][p_column - 1].equals(OTeam+"n"))
          	{
+               checkType = state.Board[p_row - 2][p_column - 1];
+               checkRow = p_row + 2;
+               checkColumn = p_column - 1;
+               checkKnight = true;
             	return true;
          	}
       	}
@@ -180,6 +243,10 @@ public class Danger
       	{
          	if(state.Board[p_row - 1][p_column - 2].equals(OTeam+"n"))
          	{
+               checkType = state.Board[p_row - 1][p_column - 2];
+               checkRow = p_row - 1;
+               checkColumn = p_column - 2;
+               checkKnight = true;
             	return true;
          	}
       	}
@@ -188,6 +255,10 @@ public class Danger
       	{
          	if(state.Board[p_row + 1][p_column - 2].equals(OTeam+"n"))
          	{
+               checkType = state.Board[p_row + 1][p_column - 2];
+               checkRow = p_row + 1;
+               checkColumn = p_column - 2;
+               checkKnight = true;
             	return true;
          	}
       	}
@@ -196,6 +267,10 @@ public class Danger
       	{
          	if(state.Board[p_row + 2][p_column - 1].equals(OTeam+"n"))
          	{
+               checkType = state.Board[p_row + 2][p_column - 1];
+               checkRow = p_row + 2;
+               checkColumn = p_column - 1;
+               checkKnight = true;
             	return true;
          	}
       	}
@@ -204,6 +279,10 @@ public class Danger
       	{
          	if(state.Board[p_row + 2][p_column + 1].equals(OTeam+"n"))
          	{
+               checkType = state.Board[p_row + 2][p_column + 1];
+               checkRow = p_row + 2;
+               checkColumn = p_column + 1;
+               checkKnight = true;
             	return true;
          	}
       	}
@@ -279,6 +358,7 @@ public class Danger
             {
                if(state.Board[p_row + 1][p_column + 1].equals(OTeam+"p"))
                {
+                  checkPawn = true;
                   return true;
                }
             }
@@ -286,6 +366,7 @@ public class Danger
             {
                if(state.Board[p_row + 1][p_column - 1].equals(OTeam+"p"))
                {
+                  checkPawn = true;
                   return true;
                }
             }
@@ -297,6 +378,7 @@ public class Danger
             {
                if(state.Board[p_row - 1][p_column + 1].equals(OTeam+"p"))
                {
+                  checkPawn = true;
                   return true;
                }
             }
@@ -304,12 +386,397 @@ public class Danger
             {
                if(state.Board[p_row - 1][p_column - 1].equals(OTeam+"p"))
                {
+                  checkPawn = true;
                   return true;
                }
             }
          }
 	      return false;
     }
+   public boolean range(int p_row, int p_column)
+   {
+      setOTeam();
+      // down
+      for(int i = 1; i < 8; i++)
+      {
+         if(p_row + i < 8) 
+         {
+            if(!state.Board[p_row + i][p_column].equals(Team+"c") && !state.Board[p_row + i][p_column].equals(Team+"q") && state.Board[p_row + i][p_column] != "z")
+            {
+               break;
+            }
+            else if(state.Board[p_row + i][p_column].equals(Team+"c") || state.Board[p_row + i][p_column].equals(Team+"q"))
+            {
+               rangeType = state.Board[p_row + i][p_column];
+               rangeRow = p_row + i;
+               rangeColumn = p_column;
+               return true;
+            }
+         }
+      }
+      // up
+      for(int i = 1; i < 8; i++)
+      {
+         if(p_row - i >= 0)
+         {
+            if(!state.Board[p_row - i][p_column].equals(Team+"c") && !state.Board[p_row - i][p_column].equals(Team+"q") && state.Board[p_row - i][p_column] != "z")
+            {
+               break;
+            }
+            else if(state.Board[p_row - i][p_column].equals(Team+"c") || state.Board[p_row - i][p_column].equals(Team+"q"))
+            {
+               rangeType = state.Board[p_row - i][p_column];
+               rangeRow = p_row - i;
+               rangeColumn = p_column;
+               return true;
+            }
+         }
+      }
+      // right
+      for(int i = 1; i < 8; i++)
+      {
+         if(p_column + i < 8)
+         {
+            if(state.Board[p_row][p_column + i].equals(Team+"c") && !state.Board[p_row][p_column + i].equals(Team+"q") && state.Board[p_row][p_column + i] != "z")
+            {
+               break;
+            }
+            else if(state.Board[p_row][p_column + i].equals(Team+"c") || state.Board[p_row][p_column + i].equals(Team+"q"))
+            {
+               rangeType = state.Board[p_row][p_column + i];
+               rangeRow = p_row;
+               rangeColumn = p_column + i;
+               return true;
+            }
+         }
+      }
+      // left
+      for(int i = 1; i < 8; i++)
+      {
+         if(p_column - i >= 0)
+         {
+            if(!state.Board[p_row][p_column - i].equals(Team+"c") && !state.Board[p_row][p_column - i].equals(Team+"q") && state.Board[p_row][p_column - i] != "z")
+            {
+               break;
+            }
+            else if(state.Board[p_row][p_column - i].equals(Team+"c") || state.Board[p_row][p_column - i].equals(Team+"q"))
+            {
+               rangeType = state.Board[p_row][p_column - i];
+               rangeRow = p_row;
+               rangeColumn = p_column - i;
+               return true;
+            }
+         }
+      }
+      //down right
+      for(int i = 1; i < 8; i++)
+      {
+         if(p_row + i < 8 && p_column + i < 8)
+         {
+            if(!state.Board[p_row + i][p_column + i].equals(Team+"b") && !state.Board[p_row + i][p_column + i].equals(Team+"q") && state.Board[p_row + i][p_column + i] != "z")
+            {
+               break;
+            }
+            else if(state.Board[p_row + i][p_column + i].equals(Team+"b") || state.Board[p_row + i][p_column +i].equals(Team+"q"))
+            {
+               rangeType = state.Board[p_row + i][p_column + i];
+               rangeRow = p_row + i;
+               rangeColumn = p_column + i;
+               return true;
+            }
+         }
+      }
+      // down left
+      for(int i = 1; i < 8; i++)
+      {
+         if(p_row + i < 8 && p_column - i >= 0)
+         {
+            if(!state.Board[p_row + i][p_column - i].equals(Team+"b") && !state.Board[p_row + i][p_column - i].equals(Team+"q")  && state.Board[p_row + i][p_column - i] != "z")
+            {
+               break;
+            }
+            else if(state.Board[p_row + i][p_column - i].equals(Team+"b") || state.Board[p_row + i][p_column - i].equals(Team+"q"))
+            {
+               rangeType = state.Board[p_row + i][p_column - i];
+               rangeRow = p_row + i;
+               rangeColumn = p_column - i;
+               return true;
+            }
+         }
+      }
+      // up right
+      for(int i = 1; i < 8; i++)
+      {
+         if(p_row - i >= 0 && p_column + i < 8)
+         {
+            if(!state.Board[p_row - i][p_column + i].equals(Team+"b") && !state.Board[p_row - i][p_column + i].equals(Team+"q") && state.Board[p_row - i][p_column + i] != "z")
+            {
+               break;
+            }
+            else if(state.Board[p_row - i][p_column + i].equals(Team+"b") || state.Board[p_row - i][p_column + i].equals(Team+"q"))
+            {
+               rangeType = state.Board[p_row - i][p_column + i];
+               rangeRow = p_row - i;
+               rangeColumn = p_column + i;
+               return true;
+            }
+         }
+      }
+      // up left
+      for(int i = 1; i < 8; i++)
+      {
+         if(p_row - i >= 0 && p_column - i >= 0)
+         {
+            if(!state.Board[p_row - i][p_column - i].equals(Team+"b") && !state.Board[p_row - i][p_column - i].equals(Team+"q") && state.Board[p_row - i][p_column - i] != "z")
+            {
+               break;
+            }
+            else if(state.Board[p_row - i][p_column - i].equals(Team+"b") || state.Board[p_row - i][p_column - i].equals(Team+"q"))
+            {
+               rangeType = state.Board[p_row - i][p_column - i];
+               rangeRow = p_row - i;
+               rangeColumn = p_column - i;
+               return true;
+            }
+         }
+      }
+      // knight check
+      if(p_row + 1 < 8 && p_column + 2 < 8)
+      {
+         if(state.Board[p_row + 1][p_column + 2].equals(Team+"n"))
+         {
+            rangeType = state.Board[p_row + 1][p_column + 2];
+            rangeRow = p_row + 1;
+            rangeColumn = p_column + 2;
+            return true;
+         }
+      }
+      // knight check
+      if(p_row - 1 >= 0 && p_column + 2 < 8)
+      {
+         if(state.Board[p_row - 1][p_column + 2].equals(Team+"n"))
+         {
+            rangeType = state.Board[p_row - 1][p_column + 2];
+            rangeRow = p_row - 1;
+            rangeColumn = p_column + 2;
+            return true;
+         }
+      }
+      // knight check
+      if(p_row - 2 >= 0 && p_column + 1 < 8)
+      {
+         if(state.Board[p_row - 2][p_column + 1].equals(Team+"n"))
+         {
+            rangeType = state.Board[p_row - 2][p_column + 1];
+            rangeRow = p_row - 2;
+            rangeColumn = p_column + 1;
+            return true;
+         }
+      }
+      // knight check
+      if(p_row - 2 >= 0 && p_column - 1 >= 0)
+      {
+         if(state.Board[p_row - 2][p_column - 1].equals(Team+"n"))
+         {
+            rangeType = state.Board[p_row - 2][p_column - 1];
+            rangeRow = p_row + 2;
+            rangeColumn = p_column - 1;
+            return true;
+         }
+      }
+      // knight check
+      if(p_row - 1 >= 0 && p_column - 2 >= 0)
+      {
+         if(state.Board[p_row - 1][p_column - 2].equals(Team+"n"))
+         {
+            rangeType = state.Board[p_row - 1][p_column - 2];
+            rangeRow = p_row - 1;
+            rangeColumn = p_column - 2;
+            return true;
+         }
+      }
+      // knight check
+      if(p_row + 1 < 8 && p_column - 2 >= 0)
+      {
+         if(state.Board[p_row + 1][p_column - 2].equals(Team+"n"))
+         {
+            rangeType = state.Board[p_row + 1][p_column - 2];
+            rangeRow = p_row + 1;
+            rangeColumn = p_column - 2;
+            return true;
+         }
+      }
+      // knight check
+      if(p_row + 2 < 8 && p_column - 1 >= 0)
+      {
+         if(state.Board[p_row + 2][p_column - 1].equals(Team+"n"))
+         {
+            rangeType = state.Board[p_row + 2][p_column - 1];
+            rangeRow = p_row + 2;
+            rangeColumn = p_column - 1;
+            return true;
+         }
+      }
+      // knight check
+      if(p_row + 2 < 8 && p_column + 1 < 8)
+      {
+         if(state.Board[p_row + 2][p_column + 1].equals(Team+"n"))
+         {
+            rangeType = state.Board[p_row + 2][p_column + 1];
+            rangeRow = p_row + 2;
+            rangeColumn = p_column + 1;
+            return true;
+         }
+      }
+      // pawn check against b pawns
+      if(Team.equals("b"))
+      {
+         if(state.Board[p_row][p_column] == "z")
+         {
+            if(p_row == 4)
+            {
+               if(state.Board[p_row + 2][p_column].equals(Team+"p"))
+               {
+                  rangeType = state.Board[p_row + 2][p_column];
+                  rangeRow = p_row + 2;
+                  rangeColumn = p_column;
+                  return true;
+               }
+            }
+            else
+            {
+               if(state.Board[p_row + 1][p_column].equals(Team+"p"))
+               {
+                  rangeType = state.Board[p_row + 1][p_column];
+                  rangeRow = p_row + 1;
+                  rangeColumn = p_column;
+                  return true;
+               }
+            }
+         }
+         else
+         {
+            if(p_row + 1 < 8 && p_column + 1 < 8)
+            {
+               if(state.Board[p_row + 1][p_column + 1].equals(Team+"p"))
+               {
+                  rangeType = state.Board[p_row + 1][p_column + 1];
+                  rangeRow = p_row + 1;
+                  rangeColumn = p_column + 1;
+                  return true;
+               }
+            }
+            if(p_row + 1 < 8 && p_column - 1 >= 0)
+            {
+               if(state.Board[p_row + 1][p_column - 1].equals(Team+"p"))
+               {
+                  rangeType = state.Board[p_row + 1][p_column - 1];
+                  rangeRow = p_row + 1;
+                  rangeColumn = p_column - 1;
+                  return true;
+               }
+            }
+         }
+      }
+      // pawn check against w pawns
+      else if(Team.equals("w"))
+      {
+         if(state.Board[p_row][p_column] == "z")
+         {
+            if(p_row == 3)
+            {
+               if(state.Board[p_row - 2][p_column].equals(Team+"p"))
+               {
+                  rangeType = state.Board[p_row - 2][p_column];
+                  rangeRow = p_row - 2;
+                  rangeColumn = p_column;
+                  return true;
+               }
+            }
+            else
+            {
+               if(state.Board[p_row - 1][p_column].equals(Team+"p"))
+               {
+                  rangeType = state.Board[p_row - 1][p_column];
+                  rangeRow = p_row - 1;
+                  rangeColumn = p_column;
+                  return true;
+               }
+            }
+         }
+         else
+         {
+            if(p_row - 1 >= 0 && p_column + 1 < 8)
+            {
+               if(state.Board[p_row - 1][p_column + 1].equals(Team+"p"))
+               {
+                  rangeType = state.Board[p_row - 1][p_column + 1];
+                  rangeRow = p_row - 1;
+                  rangeColumn = p_column + 1;
+                  return true;
+               }
+            }
+            if(p_row - 1 >= 0 && p_column - 1 >= 0)
+            {
+               if(state.Board[p_row - 1][p_column - 1].equals(Team+"p"))
+               {
+                  rangeType = state.Board[p_row - 1][p_column - 1];
+                  rangeRow = p_row - 1;
+                  rangeColumn = p_column - 1;
+                  return true;
+               }
+            }
+         }
+      }
+      return false;
+   }
+   public boolean canMove(int p_row, int p_column, String p_type)
+   {
+         Logic logic = new Logic();
+         logic.Team = state.Turn;
+         switch(p_type)
+         {
+            case "wc":
+               logic.CMEvaluate(p_row, p_column, p_row + 1, p_column, "wc");
+               logic.CMEvaluate(p_row, p_column, p_row - 1, p_column, "wc");
+               logic.CMEvaluate(p_row, p_column, p_row, p_column + 1, "wc");
+               logic.CMEvaluate(p_row, p_column, p_row, p_column - 1, "wc");
+               break;
+            case "wn":
+               break;
+            case "wb":
+               //bishop();
+               break;
+            case "wq":
+               logic.CMEvaluate(p_row, p_column, p_row + 1, p_column, "wq");
+               logic.CMEvaluate(p_row, p_column, p_row - 1, p_column, "wq");
+               logic.CMEvaluate(p_row, p_column, p_row, p_column + 1, "wq");
+               logic.CMEvaluate(p_row, p_column, p_row, p_column - 1, "wq");
+               break;
+            case "wp":
+               // wpawn();
+               break;
+            case "bc":
+               // castle();
+               break;
+            case "bn":
+               // knight();
+               break;
+            case "bb":
+               // bishop();
+               break;
+            case "bq":
+               logic.CMEvaluate(p_row, p_column, p_row + 1, p_column, "bq");
+               logic.CMEvaluate(p_row, p_column, p_row - 1, p_column, "bq");
+               logic.CMEvaluate(p_row, p_column, p_row, p_column + 1, "bq");
+               logic.CMEvaluate(p_row, p_column, p_row, p_column - 1, "bq");
+               break;
+            case "bp":
+               // bpawn();
+               break;
+         }
+         return true;
+   }
     // used for king run away on checkmate and queen runaway on stalemate testing
    public boolean checkRunAway(int p_row, int p_column)
    {
@@ -333,7 +800,7 @@ public class Danger
          else if(!state.Board[p_row - 1][p_column].startsWith(Team) && state.Board[p_row - 1][p_column] != "z")
          {
             moveTemp(p_row, p_column, p_row - 1, p_column);
-            if(!inDanger(p_row - 1, p_column) == true)
+            if(!inDanger(p_row - 1, p_column))
             {
                moveBack(p_row, p_column, p_row - 1, p_column);
                return true;
@@ -558,279 +1025,6 @@ public class Danger
             else
             {
                moveBack(p_row, p_column, p_row - 1, p_column - 1);
-            }
-         }
-      }
-      return false;
-   }
-   public boolean range(int p_row, int p_column)
-   {
-      setOTeam();
-      // down
-      for(int i = 1; i < 8; i++)
-      {
-         if(p_row + i < 8) 
-         {
-            if(!state.Board[p_row + i][p_column].equals(OTeam+"c") && !state.Board[p_row + i][p_column].startsWith(OTeam+"q") && !state.Board[p_row + i][p_column].startsWith("z"))
-            {
-               break;
-            }
-            else if((state.Board[p_row + i][p_column] == "bc") || (state.Board[p_row + i][p_column] == "bq"))
-            {
-               // rangePiece = state.Board[p_row + i][p_column];
-               // rangeRow = p_row + i;
-               // rangeColumn = p_column;
-               return true;
-            }
-         }
-      }
-      // up
-      for(int i = 1; i < 8; i++)
-      {
-         if(p_row - i >= 0)
-         {
-            if(!state.Board[p_row - i][p_column].startsWith("bc") && !state.Board[p_row - i][p_column].startsWith("bq") && !state.Board[p_row - i][p_column].startsWith("z"))
-            {
-               break;
-            }
-            else if((state.Board[p_row - i][p_column] == "bc") || (state.Board[p_row - i][p_column] == "bq"))
-            {
-               // rangePiece = state.Board[p_row - i][p_column];
-               // rangeRow = p_row - i;
-               // rangeColumn = p_column;
-               return true;
-            }
-         }
-      }
-      // right
-      for(int i = 1; i < 8; i++)
-      {
-         if(p_column + i < 8)
-         {
-            if(state.Board[p_row][p_column + i].startsWith("bc") && !state.Board[p_row][p_column + i].startsWith("bq") && !state.Board[p_row][p_column + i].startsWith("z"))
-            {
-               break;
-            }
-            else if((state.Board[p_row][p_column + i] == "bc") || (state.Board[p_row][p_column + i] == "bq"))
-            {
-               // rangePiece = state.Board[p_row][p_column + i];
-               // rangeRow = p_row;
-               // rangeColumn = p_column + i;
-               return true;
-            }
-         }
-      }
-      // left
-      for(int i = 1; i < 8; i++)
-      {
-         if(p_column - i >= 0)
-         {
-            if(!state.Board[p_row][p_column - i].startsWith("bc") && !state.Board[p_row][p_column - i].startsWith("bq") && !state.Board[p_row][p_column - i].startsWith("z"))
-            {
-               break;
-            }
-            else if((state.Board[p_row][p_column - i] == "bc") || (state.Board[p_row][p_column - i] == "bq"))
-            {
-               // rangePiece = state.Board[p_row][p_column - i];
-               // rangeRow = p_row;
-               // rangeColumn = p_column - i;
-               return true;
-            }
-         }
-      }
-      //down right
-      for(int i = 1; i < 8; i++)
-      {
-         if(p_row + i < 8 && p_column + i < 8)
-         {
-            if(!state.Board[p_row + i][p_column + i].startsWith("bb") && !state.Board[p_row + i][p_column + i].startsWith("bq") && !state.Board[p_row + i][p_column + i].startsWith("z"))
-            {
-               break;
-            }
-            else if((state.Board[p_row + i][p_column + i] == "bb") || (state.Board[p_row + i][p_column +i] == "bq"))
-            {
-               // rangePiece = state.Board[p_row + i][p_column + i];
-               // rangeRow = p_row + i;
-               // rangeColumn = p_column + i;
-               return true;
-            }
-         }
-      }
-      // down left
-      for(int i = 1; i < 8; i++)
-      {
-         if(p_row + i < 8 && p_column - i >= 0)
-         {
-            if(!state.Board[p_row + i][p_column - i].startsWith("bb") && !state.Board[p_row + i][p_column - i].startsWith("bq")  && !state.Board[p_row + i][p_column - i].startsWith("z"))
-            {
-               break;
-            }
-            else if((state.Board[p_row + i][p_column - i] == "bb") || (state.Board[p_row + i][p_column - i] == "bq"))
-            {
-               // rangePiece = state.Board[p_row + i][p_column - i];
-               // rangeRow = p_row + i;
-               // rangeColumn = p_column - i;
-               return true;
-            }
-         }
-      }
-      // up right
-      for(int i = 1; i < 8; i++)
-      {
-         if(p_row - i >= 0 && p_column + i < 8)
-         {
-            if(!state.Board[p_row - i][p_column + i].startsWith("bb") && !state.Board[p_row - i][p_column + i].startsWith("bq") && !state.Board[p_row - i][p_column + i].startsWith("z"))
-            {
-               break;
-            }
-            else if((state.Board[p_row - i][p_column + i] == "bb") || (state.Board[p_row - i][p_column + i] == "bq"))
-            {
-               // rangePiece = state.Board[p_row - i][p_column + i];
-               // rangeRow = p_row - i;
-               // rangeColumn = p_column + i;
-               return true;
-            }
-         }
-      }
-      // up left
-      for(int i = 1; i < 8; i++)
-      {
-         if(p_row - i >= 0 && p_column - i >= 0)
-         {
-            if(!state.Board[p_row - i][p_column - i].startsWith("bb") && !state.Board[p_row - i][p_column - i].startsWith("bq") && !state.Board[p_row - i][p_column - i].startsWith("z"))
-            {
-               break;
-            }
-            else if((state.Board[p_row - i][p_column - i] == "bb") || (state.Board[p_row - i][p_column - i] == "bq"))
-            {
-               // rangePiece = state.Board[p_row - i][p_column - i];
-               // rangeRow = p_row - i;
-               // rangeColumn = p_column - i;
-               return true;
-            }
-         }
-      }
-      // knight check
-      if(p_row + 1 < 8 && p_column + 2 < 8)
-      {
-         if(state.Board[p_row + 1][p_column + 2] == "bn")
-         {
-            // rangePiece = state.Board[p_row + 1][p_column + 2];
-            // rangeRow = p_row + 1;
-            // rangeColumn = p_column + 2
-            return true;
-         }
-      }
-      // knight check
-      if(p_row - 1 >= 0 && p_column + 2 < 8)
-      {
-         if(state.Board[p_row - 1][p_column + 2] == "bn")
-         {
-            // rangePiece = state.Board[p_row - 1][p_column + 2];
-            // rangeRow = p_row - 1;
-            // rangeColumn = p_column + 2
-            return true;
-         }
-      }
-      // knight check
-      if(p_row - 2 >= 0 && p_column + 1 < 8)
-      {
-         if(state.Board[p_row - 2][p_column + 1] == "bn")
-         {
-            // rangePiece = state.Board[p_row - 2][p_column + 1];
-            // rangeRow = p_row - 2;
-            // rangeColumn = p_column + 1
-            return true;
-         }
-      }
-      // knight check
-      if(p_row - 2 >= 0 && p_column - 1 >= 0)
-      {
-         if(state.Board[p_row - 2][p_column - 1] == "bn")
-         {
-            // rangePiece = state.Board[p_row - 2][p_column - 1];
-            // rangeRow = p_row + 2;
-            // rangeColumn = p_column - 1
-            return true;
-         }
-      }
-      // knight check
-      if(p_row - 1 >= 0 && p_column - 2 >= 0)
-      {
-         if(state.Board[p_row - 1][p_column - 2] == "bn")
-         {
-            // rangePiece = state.Board[p_row - 1][p_column - 2];
-            // rangeRow = p_row - 1;
-            // rangeColumn = p_column - 2
-            return true;
-         }
-      }
-      // knight check
-      if(p_row + 1 < 8 && p_column - 2 >= 0)
-      {
-         if(state.Board[p_row + 1][p_column - 2] == "bn")
-         {
-            // rangePiece = state.Board[p_row + 1][p_column - 2];
-            // rangeRow = p_row + 1;
-            // rangeColumn = p_column - 2
-            return true;
-         }
-      }
-      // knight check
-      if(p_row + 2 < 8 && p_column - 1 >= 0)
-      {
-         if(state.Board[p_row + 2][p_column - 1] == "bn")
-         {
-            // rangePiece = state.Board[p_row + 2][p_column - 1];
-            // rangeRow = p_row + 2;
-            // rangeColumn = p_column - 1
-            return true;
-         }
-      }
-      // knight check
-      if(p_row + 2 < 8 && p_column + 1 < 8)
-      {
-         if(state.Board[p_row + 2][p_column + 1] == "bn")
-         {
-            // rangePiece = state.Board[p_row + 2][p_column + 1];
-            // rangeRow = p_row + 2;
-            // rangeColumn = p_column + 1
-            return true;
-         }
-      }
-      // pawn check against b pawns
-      if(OTeam.equals("b"))
-      {
-         if(p_row + 1 < 8 && p_column + 1 < 8)
-         {
-            if(state.Board[p_row + 1][p_column + 1].equals(OTeam+"p"))
-            {
-               return true;
-            }
-         }
-         if(p_row + 1 < 8 && p_column - 1 >= 0)
-         {
-            if(state.Board[p_row + 1][p_column - 1].equals(OTeam+"p"))
-            {
-               return true;
-            }
-         }
-      }
-      // pawn check against w pawns
-      else if(OTeam.equals("w"))
-      {
-         if(p_row - 1 >= 0 && p_column + 1 < 8)
-         {
-            if(state.Board[p_row - 1][p_column + 1].equals(OTeam+"p"))
-            {
-               return true;
-            }
-         }
-         if(p_row - 1 >= 0 && p_column - 1 >= 0)
-         {
-            if(state.Board[p_row - 1][p_column - 1].equals(OTeam+"p"))
-            {
-               return true;
             }
          }
       }

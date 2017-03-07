@@ -21,6 +21,10 @@ public class State
     public static int cRow = 0;
     public static int cColumn = 0;
 	public static String[][] Board = new String[8][8];
+    public static boolean kCanMove = false;
+    String tempPieceStart;
+    String tempPieceEnd;
+    Danger danger = new Danger();
     public void changeTurn()
     {
         if(Turn == "w")
@@ -65,6 +69,9 @@ public class State
         }
         updateCheckMate();
     }
+    //
+    // checks for checkmate but also accounts for stalemates as well
+    //
     void updateCheckMate()
     {
         int kRow = 0;
@@ -95,22 +102,262 @@ public class State
         // if king can move away, out of check
         if(danger.checkRunAway(kRow, kColumn))
         {
+            kCanMove = true;
             checkMate = false;
         }
-        // if king cant move away, out of check
         else
         {
-            // if king is in check at this state
-            if(danger.inDanger(kRow, kColumn))
+            kCanMove = false;
+        }
+        // if king is in check at this state
+        if(danger.inDanger(kRow, kColumn))
+        {
+            // check danger up
+            if(!kCanMove)
             {
-                
-            }
-            // if king is not in check at this state
-            else
-            {
-
+                if(danger.checkUp)
+                {
+                    for(int i = kRow - 1; i >= danger.checkRow; i--)
+                    {
+                        if(danger.range(kRow - i, kColumn))
+                        {
+                            danger.moveTemp(danger.rangeRow, danger.rangeColumn, kRow - i, kColumn);
+                            if(danger.inDanger(kRow, kColumn))
+                            {
+                                danger.moveBack(danger.rangeRow, danger.rangeColumn, kRow - i, kColumn);
+                                checkMate = true;
+                            }
+                            else
+                            {
+                                danger.moveBack(danger.rangeRow, danger.rangeColumn, kRow - i, kColumn);
+                                checkMate = false;
+                            }
+                        }
+                    }
+                    checkMate = true;
+                }
+                // check danger down
+                else if(danger.checkDown)
+                {
+                    for(int i = kRow + 1; i <= danger.checkRow; i++)
+                    {
+                        if(danger.range(kRow + i, kColumn))
+                        {
+                            danger.moveTemp(danger.rangeRow, danger.rangeColumn, kRow + i, kColumn);
+                            if(danger.inDanger(kRow, kColumn))
+                            {
+                                danger.moveBack(danger.rangeRow, danger.rangeColumn, kRow + i, kColumn);
+                                checkMate = true;
+                            }
+                            else
+                            {
+                                danger.moveBack(danger.rangeRow, danger.rangeColumn, kRow + i, kColumn);
+                                checkMate = false;
+                            }
+                        }
+                    }
+                    checkMate = true;
+                }
+                // check danger right
+                else if(danger.checkRight)
+                {
+                    for(int i = kColumn + 1; i <= danger.checkColumn; i++)
+                    {
+                        if(danger.range(kRow, kColumn + i))
+                        {
+                            danger.moveTemp(danger.rangeRow, danger.rangeColumn, kRow, kColumn + i);
+                            if(danger.inDanger(kRow, kColumn))
+                            {
+                                danger.moveBack(danger.rangeRow, danger.rangeColumn, kRow, kColumn + i);
+                                checkMate = true;
+                            }
+                            else
+                            {
+                                danger.moveBack(danger.rangeRow, danger.rangeColumn, kRow, kColumn + i);
+                                checkMate = false;
+                            }
+                        }
+                    }
+                    checkMate = true;
+                }
+                // check danger left
+                else if(danger.checkLeft)
+                {
+                    for(int i = kColumn - 1; i >= danger.checkColumn; i--)
+                    {
+                        if(danger.range(kRow, kColumn - i))
+                        {
+                            danger.moveTemp(danger.rangeRow, danger.rangeColumn, kRow, kColumn - i);
+                            if(danger.inDanger(kRow, kColumn))
+                            {
+                                danger.moveBack(danger.rangeRow, danger.rangeColumn, kRow, kColumn - i);
+                                checkMate = true;
+                            }
+                            else
+                            {
+                                danger.moveBack(danger.rangeRow, danger.rangeColumn, kRow, kColumn - i);
+                                checkMate = false;
+                            }
+                        }
+                    }
+                    checkMate = true;
+                }
+                // check danger upright
+                else if(danger.checkUpRight)
+                {
+                    for(int i = 1; i <= kRow - danger.checkRow; i++)
+                    {
+                        if(danger.range(kRow - i, kColumn + i))
+                        {
+                            danger.moveTemp(danger.rangeRow, danger.rangeColumn, kRow - i, kColumn + i);
+                            if(danger.inDanger(kRow, kColumn))
+                            {
+                                danger.moveBack(danger.rangeRow, danger.rangeColumn, kRow - i, kColumn + i);
+                                checkMate = true;
+                            }
+                            else
+                            {
+                                danger.moveBack(danger.rangeRow, danger.rangeColumn, kRow - i, kColumn + i);
+                                checkMate = false;
+                            }
+                        }
+                    }
+                    checkMate = true;
+                }
+                // check danger upleft
+                else if(danger.checkUpLeft)
+                {
+                    for(int i = 1; i <= kRow - danger.checkRow; i++)
+                    {
+                        if(danger.range(kRow - i, kColumn - i))
+                        {
+                            danger.moveTemp(danger.rangeRow, danger.rangeColumn, kRow - i, kColumn - i);
+                            if(danger.inDanger(kRow, kColumn))
+                            {
+                                danger.moveBack(danger.rangeRow, danger.rangeColumn, kRow - i, kColumn - i);
+                                checkMate = true;
+                            }
+                            else
+                            {
+                                danger.moveBack(danger.rangeRow, danger.rangeColumn, kRow - i, kColumn - i);
+                                checkMate = false;
+                            }
+                        }
+                    }
+                    checkMate = true;
+                }
+                // check danger downleft
+                else if(danger.checkDownLeft)
+                {
+                    for(int i = 1; i <= danger.checkRow - kRow; i++)
+                    {
+                        if(danger.range(kRow + i, kColumn - i))
+                        {
+                            danger.moveTemp(danger.rangeRow, danger.rangeColumn, kRow + i, kColumn - i);
+                            if(danger.inDanger(kRow, kColumn))
+                            {
+                                danger.moveBack(danger.rangeRow, danger.rangeColumn, kRow + i, kColumn - i);
+                                checkMate = true;
+                            }
+                            else
+                            {
+                                danger.moveBack(danger.rangeRow, danger.rangeColumn, kRow + i, kColumn - i);
+                                checkMate = false;
+                            }
+                        }
+                    }
+                    checkMate = true;
+                }
+                // check danger downright
+                else if(danger.checkDownRight)
+                {
+                    for(int i = 1; i <= danger.checkRow - kRow; i++)
+                    {
+                        if(danger.range(kRow + i, kColumn + i))
+                        {
+                            danger.moveTemp(danger.rangeRow, danger.rangeColumn, kRow + i, kColumn + i);
+                            if(danger.inDanger(kRow, kColumn))
+                            {
+                                danger.moveBack(danger.rangeRow, danger.rangeColumn, kRow + i, kColumn + i);
+                                checkMate = true;
+                            }
+                            else
+                            {
+                                danger.moveBack(danger.rangeRow, danger.rangeColumn, kRow + i, kColumn + i);
+                                checkMate = false;
+                            }
+                        }
+                    }
+                    checkMate = true;
+                }
             }
         }
+        // if king is not in check at this state
+        else
+        {
+            // if king can move checkmate false;
+            if(kCanMove)
+            {
+                checkMate = false;
+            }
+            else
+            {
+                if(anyCanMove())
+                {
+
+                }
+                else
+                {
+
+                }
+            }
+        }
+    }
+    boolean anyCanMove()
+    {
+        if(Turn == "w")
+        {
+            for(int i = 0; i < wAlive.size(); i++)
+            {
+                if(wAlive.get(i).type != "wk")
+                {
+                    if(danger.canMove(wAlive.get(i).startRow, wAlive.get(i).startColumn, wAlive.get(i).type))
+                    {
+                        return true;
+                    }
+                    else
+                    {
+
+                    }
+                }
+                if(i == bAlive.size() - 1)
+                {
+                   return false;
+                }
+            }
+        }
+        else
+        {
+            for(int i = 0; i < bAlive.size(); i++)
+            {
+                if(bAlive.get(i).type != "k")
+                {
+                    if(danger.canMove(wAlive.get(i).startRow, wAlive.get(i).startColumn, wAlive.get(i).type))
+                    {
+                        return true;
+                    }
+                    else
+                    {
+
+                    }
+                }
+                if(i == bAlive.size() - 1)
+                {
+                    return false;
+                }
+            }
+        }
+        return false;
     }
     public void newGame()
     {

@@ -69,7 +69,7 @@ public class Castle
         	   {
             	if(state.Board[7][i] != "z")
             	{
-               		return false;
+               	return false;
             	}
          	}
       	}
@@ -79,7 +79,7 @@ public class Castle
          	{
             	if(state.Board[7][i] != "z")
             	{
-               		return false;
+               	return false;
             	}
          	}
       	}
@@ -89,7 +89,7 @@ public class Castle
          	{
             	if(state.Board[0][i] != "z")
             	{
-               		return false;
+               	return false;
             	}
          	}
       	}
@@ -99,7 +99,7 @@ public class Castle
          	{
             	if(state.Board[0][i] != "z")
             	{
-               		return false;
+               	return false;
             	}
          	}
       	}
@@ -112,7 +112,7 @@ public class Castle
    {
       if(p_endRow == 7 && p_endColumn == 2)
       {
-         for(int i = 4; i > 1; i--)
+         for(int i = 4; i > 0; i--)
          {
             if(!danger.inDanger(7, i))
             {
@@ -140,7 +140,7 @@ public class Castle
       }
       else if(p_endRow == 0 && p_endColumn == 2)
       {
-         for(int i = 4; i > 1; i--)
+         for(int i = 4; i > 0; i--)
          {
             if(!danger.inDanger(0, i))
             {
