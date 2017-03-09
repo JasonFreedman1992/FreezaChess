@@ -1,4 +1,5 @@
 import java.util.*;
+import javax.swing.JOptionPane;
 
 public class State
 {
@@ -24,16 +25,17 @@ public class State
     public static boolean kCanMove = false;
     String tempPieceStart;
     String tempPieceEnd;
-    Danger danger = new Danger();
     public void changeTurn()
     {
         if(Turn == "w")
         {
             Turn = "b";
+            update();
         }
         else if(Turn == "b")
         {
             Turn = "w";
+            update();
         }
     }
     public void update()
@@ -102,11 +104,13 @@ public class State
         // if king can move away, out of check
         if(danger.checkRunAway(kRow, kColumn))
         {
+            System.out.println("State.updateCheckMate() line 105");
             kCanMove = true;
             checkMate = false;
         }
         else
         {
+            System.out.println("state.updateCheckMate() line 111");
             kCanMove = false;
         }
         // if king is in check at this state
@@ -124,11 +128,13 @@ public class State
                             danger.moveTemp(danger.rangeRow, danger.rangeColumn, kRow - i, kColumn);
                             if(danger.inDanger(kRow, kColumn))
                             {
+                                System.out.println("state.updateCheckMate() line 129");
                                 danger.moveBack(danger.rangeRow, danger.rangeColumn, kRow - i, kColumn);
                                 checkMate = true;
                             }
                             else
                             {
+                                System.out.println("state.updateCheckMate() line 135");
                                 danger.moveBack(danger.rangeRow, danger.rangeColumn, kRow - i, kColumn);
                                 checkMate = false;
                             }
@@ -146,11 +152,13 @@ public class State
                             danger.moveTemp(danger.rangeRow, danger.rangeColumn, kRow + i, kColumn);
                             if(danger.inDanger(kRow, kColumn))
                             {
+                                System.out.println("state.updateCheckMate() line 153");
                                 danger.moveBack(danger.rangeRow, danger.rangeColumn, kRow + i, kColumn);
                                 checkMate = true;
                             }
                             else
                             {
+                                System.out.println("state.updateCheckMate() line 159");
                                 danger.moveBack(danger.rangeRow, danger.rangeColumn, kRow + i, kColumn);
                                 checkMate = false;
                             }
@@ -168,11 +176,13 @@ public class State
                             danger.moveTemp(danger.rangeRow, danger.rangeColumn, kRow, kColumn + i);
                             if(danger.inDanger(kRow, kColumn))
                             {
+                                System.out.println("state.updateCheckMate() line 177");
                                 danger.moveBack(danger.rangeRow, danger.rangeColumn, kRow, kColumn + i);
                                 checkMate = true;
                             }
                             else
                             {
+                                System.out.println("state.updateCheckMate() line 183");
                                 danger.moveBack(danger.rangeRow, danger.rangeColumn, kRow, kColumn + i);
                                 checkMate = false;
                             }
@@ -190,11 +200,13 @@ public class State
                             danger.moveTemp(danger.rangeRow, danger.rangeColumn, kRow, kColumn - i);
                             if(danger.inDanger(kRow, kColumn))
                             {
+                                System.out.println("state.updateCheckMate() line 201");
                                 danger.moveBack(danger.rangeRow, danger.rangeColumn, kRow, kColumn - i);
                                 checkMate = true;
                             }
                             else
                             {
+                                System.out.println("state.updateCheckMate() line 207");
                                 danger.moveBack(danger.rangeRow, danger.rangeColumn, kRow, kColumn - i);
                                 checkMate = false;
                             }
@@ -212,11 +224,13 @@ public class State
                             danger.moveTemp(danger.rangeRow, danger.rangeColumn, kRow - i, kColumn + i);
                             if(danger.inDanger(kRow, kColumn))
                             {
+                                System.out.println("state.updateCheckMate() line 225");
                                 danger.moveBack(danger.rangeRow, danger.rangeColumn, kRow - i, kColumn + i);
                                 checkMate = true;
                             }
                             else
                             {
+                                System.out.println("state.updateCheckMate() line 231");
                                 danger.moveBack(danger.rangeRow, danger.rangeColumn, kRow - i, kColumn + i);
                                 checkMate = false;
                             }
@@ -234,11 +248,13 @@ public class State
                             danger.moveTemp(danger.rangeRow, danger.rangeColumn, kRow - i, kColumn - i);
                             if(danger.inDanger(kRow, kColumn))
                             {
+                                System.out.println("state.updateCheckMate() line 249");
                                 danger.moveBack(danger.rangeRow, danger.rangeColumn, kRow - i, kColumn - i);
                                 checkMate = true;
                             }
                             else
                             {
+                                System.out.println("state.updateCheckMate() line 255");
                                 danger.moveBack(danger.rangeRow, danger.rangeColumn, kRow - i, kColumn - i);
                                 checkMate = false;
                             }
@@ -256,11 +272,13 @@ public class State
                             danger.moveTemp(danger.rangeRow, danger.rangeColumn, kRow + i, kColumn - i);
                             if(danger.inDanger(kRow, kColumn))
                             {
+                                System.out.println("state.updateCheckMate() line 273");
                                 danger.moveBack(danger.rangeRow, danger.rangeColumn, kRow + i, kColumn - i);
                                 checkMate = true;
                             }
                             else
                             {
+                                System.out.println("state.updateCheckMate() line 279");
                                 danger.moveBack(danger.rangeRow, danger.rangeColumn, kRow + i, kColumn - i);
                                 checkMate = false;
                             }
@@ -278,11 +296,13 @@ public class State
                             danger.moveTemp(danger.rangeRow, danger.rangeColumn, kRow + i, kColumn + i);
                             if(danger.inDanger(kRow, kColumn))
                             {
+                                System.out.println("state.updateCheckMate() line 297");
                                 danger.moveBack(danger.rangeRow, danger.rangeColumn, kRow + i, kColumn + i);
                                 checkMate = true;
                             }
                             else
                             {
+                                System.out.println("state.updateCheckMate() line 302");
                                 danger.moveBack(danger.rangeRow, danger.rangeColumn, kRow + i, kColumn + i);
                                 checkMate = false;
                             }
@@ -290,6 +310,49 @@ public class State
                     }
                     checkMate = true;
                 }
+                else if(danger.checkKnight)
+                {
+                    if(danger.range(danger.checkRow, danger.checkColumn))
+                    {
+                        danger.moveTemp(danger.rangeRow, danger.rangeColumn, danger.checkRow, danger.checkColumn);
+                        if(danger.inDanger(kRow, kColumn))
+                        {
+                            System.out.println("state.updateCheckMate() line 318");
+                            danger.moveBack(danger.rangeRow, danger.rangeColumn, danger.checkRow, danger.checkColumn);
+                            checkMate = true;
+                        }
+                        else
+                        {
+                            System.out.println("state.updateCheckMate() line 324");
+                            danger.moveBack(danger.rangeRow, danger.rangeColumn, danger.checkRow, danger.checkColumn);
+                            checkMate = false;
+                        }
+                    }
+                }
+                else if(danger.checkPawn)
+                {
+                    if(danger.range(danger.checkRow, danger.checkColumn))
+                    {
+                        danger.moveTemp(danger.rangeRow, danger.rangeColumn, danger.checkRow, danger.checkColumn);
+                        if(danger.inDanger(kRow, kColumn))
+                        {
+                            System.out.println("state.updateCheckMate() line 337");
+                            danger.moveBack(danger.rangeRow, danger.rangeColumn, danger.checkRow, danger.checkColumn);
+                            checkMate = true;
+                        }
+                        else
+                        {
+                            System.out.println("state.updateCheckMate() line 343");
+                            danger.moveBack(danger.rangeRow, danger.rangeColumn, danger.checkRow, danger.checkColumn);
+                            checkMate = false;
+                        }
+                    }
+                }
+            }
+            else
+            {
+                System.out.println("state.updateCheckMate() line 352");
+                checkMate = false;
             }
         }
         // if king is not in check at this state
@@ -298,23 +361,28 @@ public class State
             // if king can move checkmate false;
             if(kCanMove)
             {
+                System.out.println("state.updateCheckMate() line 362");
                 checkMate = false;
             }
             else
             {
                 if(anyCanMove())
                 {
-
+                    System.out.println("state.updateCheckMate() line 369");
+                    checkMate = false;
                 }
                 else
                 {
-
+                    System.out.println("state.updateCheckMate() line 374");
+                    checkMate = true;
                 }
             }
         }
+        updateMessage();
     }
     boolean anyCanMove()
     {
+        Danger danger = new Danger();
         if(Turn == "w")
         {
             for(int i = 0; i < wAlive.size(); i++)
@@ -323,6 +391,7 @@ public class State
                 {
                     if(danger.canMove(wAlive.get(i).startRow, wAlive.get(i).startColumn, wAlive.get(i).type))
                     {
+                        System.out.println("state.anycanMove() line 392");
                         return true;
                     }
                     else
@@ -330,8 +399,9 @@ public class State
 
                     }
                 }
-                if(i == bAlive.size() - 1)
+                if(i == wAlive.size() - 1)
                 {
+                   System.out.println("state.anycanMove() line 402");
                    return false;
                 }
             }
@@ -340,10 +410,11 @@ public class State
         {
             for(int i = 0; i < bAlive.size(); i++)
             {
-                if(bAlive.get(i).type != "k")
+                if(bAlive.get(i).type != "bk")
                 {
-                    if(danger.canMove(wAlive.get(i).startRow, wAlive.get(i).startColumn, wAlive.get(i).type))
+                    if(danger.canMove(bAlive.get(i).startRow, bAlive.get(i).startColumn, bAlive.get(i).type))
                     {
+                        System.out.println("state.anycanMove() line 415");
                         return true;
                     }
                     else
@@ -353,6 +424,7 @@ public class State
                 }
                 if(i == bAlive.size() - 1)
                 {
+                    System.out.println("state.anycanMove() line 425");
                     return false;
                 }
             }
@@ -407,7 +479,17 @@ public class State
         Board[7][5] = "bb";
         Board[7][6] = "bn";
         Board[7][7] = "bc";  
-        update();
+    }
+    void updateMessage()
+    {
+        if(checkMate)
+        {
+            JOptionPane.showMessageDialog(null, "CheckMate, game is over.");
+        }
+        else
+        {
+
+        }
     }
    	void updateAlive()
    	{

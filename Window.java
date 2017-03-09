@@ -68,7 +68,6 @@ public class Window extends JFrame
         		}
                 Render();
                 RenderDead();
-                state.update();
         	}
         }
     }

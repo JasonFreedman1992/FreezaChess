@@ -1,7 +1,6 @@
 public class Castle
 {
 	State state = new State();
-	Danger danger = new Danger();
    	public boolean checkCastle(int p_endRow, int p_endColumn)
    	{
       	if(castlePath(p_endRow, p_endColumn))
@@ -110,6 +109,7 @@ public class Castle
    //
    private boolean castleDanger(int p_endRow, int p_endColumn)
    {
+      Danger danger = new Danger();
       if(p_endRow == 7 && p_endColumn == 2)
       {
          for(int i = 4; i > 0; i--)

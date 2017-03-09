@@ -11,12 +11,15 @@ public class Logic
 	int kColumn;
 	public boolean Evaluate(int p_startRow, int p_startColumn, int p_endRow, int p_endColumn, String p_type)
 	{
+        System.out.println("Logic.Evaluate line 14");
 		// if destination is not same team
 		if(!sameType(p_endRow, p_endColumn))
 		{
+            System.out.println("Logic.Evaluate line 18");
 			// if destination is legal move
 			if(moves.Legal(p_startRow, p_startColumn, p_endRow, p_endColumn, p_type))
 			{
+                System.out.println("Logic.Evaluate line 22");
 				// temporarily move
 				moveTemp(p_startRow, p_startColumn, p_endRow, p_endColumn);
 				// update king position
@@ -24,59 +27,73 @@ public class Logic
 				// see if king is in check after temporarily moving
 				if(!danger.inDanger(kRow, kColumn))
 				{
+                    System.out.println("Logic.Evaluate line 30");
 					// check if move is a killing move, taking off of wAlive list
 					checkKill();
 					return true;
 				}
 				else
 				{
-					// moveBack if puts in danger, or in danger still after temp move
+                    System.out.println("Logic.Evaluate line 37");
 					moveBack(p_startRow, p_startColumn, p_endRow, p_endColumn);
 					return false;
 				}
 			}
 			else
 			{
+                System.out.println("Logic.Evaluate line 44");
 				return false;
 			}
 		}
 		else
 		{
+            System.out.println("Logic.Evaluate line 50");
 			return false;
 		}
 	}
     public boolean CMEvaluate(int p_startRow, int p_startColumn, int p_endRow, int p_endColumn, String p_type)
     {
+        System.out.println("Logic.CMEvaluate line 56");
         if(!sameType(p_endRow, p_endColumn))
         {
+            System.out.println("Logic.CMEvaluate line 59");
             if(moves.Legal(p_startRow, p_startColumn, p_endRow, p_endColumn, p_type))
             {
+                System.out.println("Logic.CMEvaluate line 62");
                 moveTemp(p_startRow, p_startColumn, p_endRow, p_endColumn);
                 checkKing();
                 if(!danger.inDanger(kRow, kColumn))
                 {
+                    System.out.println("Logic.CMEvaluate line 67");
                     moveBack(p_startRow, p_startColumn, p_endRow, p_endColumn);
                     return true;
                 }
                 else
                 {
+                    System.out.println("Logic.CMEvaluate line 73");
                     moveBack(p_startRow, p_startColumn, p_endRow, p_endColumn);
                     return false;
                 }
             }
             else
             {
+                System.out.println("Logic.CMEvaluate line 80");
                 return false;
             }
         }
         else
         {
+            System.out.println("Logic.CMEvaluate line 86");
             return false;
         }
     }
 
 	boolean sameType(int p_endRow, int p_endColumn)
 	{
+        if(p_endRow < 0 || p_endRow > 7 || p_endColumn < 0 || p_endColumn > 7)
+        {
+            return true;
+        }
 		if(state.Board[p_endRow][p_endColumn].startsWith(Team))
 		{
 			return true;
