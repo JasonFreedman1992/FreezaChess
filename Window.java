@@ -58,12 +58,10 @@ public class Window extends JFrame
         		type = state.Board[i][j];
         		if(state.Turn == "w")
         		{
-                    System.out.println("state turn = w");
         			WPlayer.run(row, column, type);
         		}
         		else
         		{
-                    System.out.println("state turn = b");
         			BPlayer.run(row, column, type);
         		}
                 Render();
@@ -80,7 +78,38 @@ public class Window extends JFrame
         {
             public void actionPerformed(ActionEvent e)
             {  
+                int totalTurnCount = 0;
+                int LegalTurnCount = 0;
+                int CMTurnCount = 0;
+                state.legalCount = 0;
 
+                while(CMTurnCount < 100 && totalTurnCount < 1000000)
+                {
+                    totalTurnCount++;
+                    if(!state.checkMate)
+                    {
+                        if(state.Turn == "b")
+                        {
+                            BFreeza.run();
+                        }
+                        else
+                        {
+                            WFreeza.run();
+                        }
+                        System.out.println(totalTurnCount);
+                        System.out.println(CMTurnCount);
+                        Render();
+                        RenderDead();
+                    }
+                    else
+                    {
+                        state.newGame();
+                        CMTurnCount++;
+                    }
+
+                    //Render();
+                    //RenderDead();
+                }
             }
         });
         add(initFreeza);
@@ -128,7 +157,6 @@ public class Window extends JFrame
                     state.changeTurn();
                     Render();
                     RenderDead();
-                    state.update();
                 }
 
             }
@@ -161,7 +189,6 @@ public class Window extends JFrame
                     state.changeTurn();
                     Render();
                     RenderDead();
-                    state.update();
                 }
             }
         });
