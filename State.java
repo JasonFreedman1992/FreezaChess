@@ -281,16 +281,13 @@ public class State
                         if(danger.range(kRow + i, kColumn - i))
                         {
                             danger.moveTemp(danger.rangeRow, danger.rangeColumn, kRow + i, kColumn - i);
-                            System.out.println("move temped line 278");
                             if(danger.inDanger(kRow, kColumn))
                             {
-                                System.out.println("danger still found, checkmate line 281");
                                 danger.moveBack(danger.rangeRow, danger.rangeColumn, kRow + i, kColumn - i);
                                 checkMate = true;
                             }
                             else
                             {
-                                System.out.println("no danger found, no checkmate line 287");
                                 danger.moveBack(danger.rangeRow, danger.rangeColumn, kRow + i, kColumn - i);
                                 checkMate = false;
                                 break;
