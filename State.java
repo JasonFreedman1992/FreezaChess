@@ -134,6 +134,7 @@ public class State
                             {
                                 danger.moveBack(danger.rangeRow, danger.rangeColumn, i, kColumn);
                                 checkMate = false;
+                                break;
                             }
                         }
                     }
@@ -159,6 +160,7 @@ public class State
                             {
                                 danger.moveBack(danger.rangeRow, danger.rangeColumn, i, kColumn);
                                 checkMate = false;
+                                break;
                             }
                         }
                     }
@@ -184,6 +186,7 @@ public class State
                             {
                                 danger.moveBack(danger.rangeRow, danger.rangeColumn, kRow, i);
                                 checkMate = false;
+                                break;
                             }
                         }
                     }
@@ -209,6 +212,7 @@ public class State
                             {
                                 danger.moveBack(danger.rangeRow, danger.rangeColumn, kRow, i);
                                 checkMate = false;
+                                break;
                             }
                         }
                     }
@@ -234,6 +238,7 @@ public class State
                             {
                                 danger.moveBack(danger.rangeRow, danger.rangeColumn, kRow - i, kColumn + i);
                                 checkMate = false;
+                                break;
                             }
                         }
                     }
@@ -259,6 +264,7 @@ public class State
                             {
                                 danger.moveBack(danger.rangeRow, danger.rangeColumn, kRow - i, kColumn - i);
                                 checkMate = false;
+                                break;
                             }
                         }
                     }
@@ -275,15 +281,19 @@ public class State
                         if(danger.range(kRow + i, kColumn - i))
                         {
                             danger.moveTemp(danger.rangeRow, danger.rangeColumn, kRow + i, kColumn - i);
+                            System.out.println("move temped line 278");
                             if(danger.inDanger(kRow, kColumn))
                             {
+                                System.out.println("danger still found, checkmate line 281");
                                 danger.moveBack(danger.rangeRow, danger.rangeColumn, kRow + i, kColumn - i);
                                 checkMate = true;
                             }
                             else
                             {
+                                System.out.println("no danger found, no checkmate line 287");
                                 danger.moveBack(danger.rangeRow, danger.rangeColumn, kRow + i, kColumn - i);
                                 checkMate = false;
+                                break;
                             }
                         }
                     }
@@ -309,11 +319,10 @@ public class State
                             {
                                 danger.moveBack(danger.rangeRow, danger.rangeColumn, kRow + i, kColumn + i);
                                 checkMate = false;
+                                break;
                             }
                         }
                     }
-          
-
                     if(!danger.rangeFound)
                     {
                         checkMate = true;
@@ -321,10 +330,8 @@ public class State
                 }
                 else if(danger.checkKnight)
                 {
-                    System.out.println("state.danger.checkrow,column = " + danger.checkRow + " " + danger.checkColumn);
                     if(danger.range(danger.checkRow, danger.checkColumn))
                     {
-                        System.out.println("state.danger.rangerow,rangecolumn,checkrow,checkcolumn " + danger.rangeRow + "," + danger.rangeColumn + "," + danger.checkRow + "," + danger.checkColumn);
                         danger.moveTemp(danger.rangeRow, danger.rangeColumn, danger.checkRow, danger.checkColumn);
                         if(danger.inDanger(kRow, kColumn))
                         {
@@ -508,11 +515,11 @@ public class State
         {
             if(!staleMate)
             {
-                //JOptionPane.showMessageDialog(null, "CheckMate, game is over.");
+                JOptionPane.showMessageDialog(null, "CheckMate, game is over.");
             }
             else if(staleMate)
             {
-                //JOptionPane.showMessageDialog(null, "staleMate, game is over.");
+                JOptionPane.showMessageDialog(null, "staleMate, game is over.");
             }
         }
         else

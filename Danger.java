@@ -149,10 +149,12 @@ public class Danger
          	{
             	if(!state.Board[p_row + i][p_column - i].equals(OTeam+"b") && !state.Board[p_row + i][p_column - i].equals(OTeam+"q")  && !state.Board[p_row + i][p_column - i].equals("z"))
             	{
+                  System.out.println("found something in way of downleft line 157 danger");
                	break;
             	}
             	else if((state.Board[p_row + i][p_column - i].equals(OTeam+"b")) || (state.Board[p_row + i][p_column - i].equals(OTeam+"q")))
             	{
+                  System.out.println("found something putting me in check line 157 danger");
                   checkType = state.Board[p_row + i][p_column - i];
                   checkRow = p_row + i;
                   checkColumn = p_column - i;
