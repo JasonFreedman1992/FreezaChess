@@ -5,7 +5,7 @@ public class Freeza
 	String Team;
 	Logic logic = new Logic();
 	State state = new State();
-	ArrayList<infPossible> possibleMoves = new ArrayList<infPossible>();
+	LinkedList<infPossible> possibleMoves = new LinkedList<infPossible>();
 	public Freeza(String p_team)
 	{
 		Team = p_team;
@@ -13,25 +13,18 @@ public class Freeza
 		logic.danger.Team = p_team;
 	}
 
-	public inf getPiece(int p_i)
-	{
-		if(Team == "w")
-		{
-			return state.wAlive.get(p_i);
-		}
-		else
-		{
-			return state.bAlive.get(p_i); 
-		}
-	}
-
 	public void run()
 	{
 		if(Team == "w")
 		{
-			for(int i = 0; i < wAlive.size(); i++)
+			for(int i = 0; i < state.wAlive.size(); i++)
 			{
-				possibleMoves.
+				int startRow = state.wAlive.get(i).startRow;
+				int startColumn = state.wAlive.get(i).startColumn;
+				Gen gen = new Gen(state.wAlive.get(i));
+				int endRow = gen.endRow;
+				int endColumn = gen.endColumn;
+				possibleMoves.add(new infPossible(startRow, startColumn, endRow, endColumn));
 			}
 		}
 		else

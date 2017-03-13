@@ -23,7 +23,6 @@ public class Danger
    boolean checkPawn;
    boolean checkKnight;
    boolean rangeFound = false;
-
 	void setOTeam()
    {
       if(state.Turn.equals("w"))
