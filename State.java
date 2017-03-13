@@ -16,7 +16,6 @@ public class State
     public static boolean Convert = false;
     public static boolean checkMate = false;
     public static boolean staleMate = false;
-    public static boolean kill = false;
 	public static String Turn = "b";
     public static String cTurn = "";
     public static int cRow = 0;
@@ -24,8 +23,7 @@ public class State
 	public static String[][] Board = new String[8][8];
     public static boolean kCanMove = false;
     public static int legalCount = 0;
-    String tempPieceStart;
-    String tempPieceEnd;
+    
     public void changeTurn()
     {
         if(Turn == "w")
@@ -88,6 +86,7 @@ public class State
                 {
                     kRow = wAlive.get(i).startRow;
                     kColumn = wAlive.get(i).startColumn;
+                    break;
                 }
             }
         }
@@ -99,6 +98,7 @@ public class State
                 {
                     kRow = bAlive.get(i).startRow;
                     kColumn = bAlive.get(i).startColumn;
+                    break;
                 }
             }
         }
@@ -410,10 +410,6 @@ public class State
                     {
                         return true;
                     }
-                    else
-                    {
-
-                    }
                 }
                 if(i == wAlive.size() - 1)
                 {
@@ -430,10 +426,6 @@ public class State
                     if(danger.canMove(bAlive.get(i).startRow, bAlive.get(i).startColumn, bAlive.get(i).type))
                     {
                         return true;
-                    }
-                    else
-                    {
-
                     }
                 }
                 if(i == bAlive.size() - 1)
@@ -519,10 +511,6 @@ public class State
                 JOptionPane.showMessageDialog(null, "staleMate, game is over.");
             }
         }
-        else
-        {
-
-        }
     }
    	void updateAlive()
    	{
@@ -543,16 +531,4 @@ public class State
            	}
       	}
    	}
-    class inf
-    {
-	    int startRow = 0;
-	    int startColumn = 0;
-	    String type = "";
-        inf(String p_type, int p_startRow, int p_startColumn)
-        {
-            startRow = p_startRow;
-            startColumn = p_startColumn;
-            type = p_type;
-        }
-    }
 }

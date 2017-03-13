@@ -102,7 +102,6 @@ public class Logic
    	{
       	state.Board[p_startRow][p_startColumn] = tempPieceStart;
       	state.Board[p_endRow][p_endColumn] = tempPieceEnd;
-      	state.kill = false;
       	state.Convert = false;
       	state.cRow = 0;
       	state.cColumn = 0;

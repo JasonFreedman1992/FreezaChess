@@ -1,8 +1,8 @@
 public class Moves
 {
    State state = new State();
-	boolean pass;
    Castle castle = new Castle();
+   boolean pass;
 	public boolean Legal(int p_startRow, int p_startColumn, int p_endRow, int p_endColumn, String p_type)
 	{
 	 	// reset

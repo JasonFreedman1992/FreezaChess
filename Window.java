@@ -27,8 +27,13 @@ public class Window extends JFrame
     State state = new State();
     Player WPlayer = new Player("w");
     Player BPlayer = new Player("b");
+
+
+    //RFreeza WFreeza = new RFreeza("w");
     Freeza WFreeza = new Freeza("w");
-    Freeza BFreeza = new Freeza("b");
+    RFreeza BFreeza = new RFreeza("b");
+
+
     public JButton initGame = new JButton("New Game");
     public JButton initFreeza = new JButton("Start Freeza");
     public JButton initQueen = new JButton("Queen");
@@ -98,17 +103,14 @@ public class Window extends JFrame
                         }
                         System.out.println(totalTurnCount);
                         System.out.println(CMTurnCount);
-                        Render();
-                        RenderDead();
                     }
                     else
                     {
                         state.newGame();
                         CMTurnCount++;
                     }
-
-                    //Render();
-                    //RenderDead();
+                    Render();
+                    RenderDead();
                 }
             }
         });
